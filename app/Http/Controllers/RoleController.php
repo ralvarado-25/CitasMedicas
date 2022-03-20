@@ -68,7 +68,20 @@ class RoleController extends Controller
         Session::flash('messageRol','Para efectuar las modificaciones realizadas en este rol debe actualizar la asignación del rol en cada usuario perteneciente al mismo');
         $contid = $request->tabinput != null ? $request->tabinput : '';
         return  \Response::json(['success' => '1','contid'=> $contid]);
+    }
 
+    public function changestatus($id){
+        $role = Role::findOrFail(decode($id));
+        if ($role->active=='0') {
+            $role->active='1';
+            $role->save();
+            toastr()->success('Activado correctamente.','Rol '.$role->name, ['positionClass' => 'toast-bottom-right']);
+        }else {
+            $role->active='0';
+            $role->save();
+            toastr()->error('Desactivado correctamente.','Rol '.$role->name, ['positionClass' => 'toast-bottom-right']);
+        }
+        return back();
     }
 
 }

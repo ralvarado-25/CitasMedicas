@@ -50,7 +50,7 @@
 
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="text-center">
-                    {!! Form::open(['route'=>['roles.changestatus', code($role->id)], 'method'=>'GET']) !!}
+                    {!! Form::open(['route'=>['roles.changestatus', code($role->id)], 'method'=>'GET', 'onsubmit'=>'btnState.disabled = true; return true;']) !!}
                         @if ($role->active==0)
                             <button type="button" class="btn btn-ghost-info font-weight-bold border border-info" id="btnActivar">
                                 <i class="fa fa-plug"></i>&nbsp; Activar rol
@@ -87,7 +87,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="col">
-                                                    <button type="submit" class="btn @if($role->active==0) btn-info @else btn-red @endif w-100" name="btnASignar">Confirmar</button>
+                                                    <button type="submit" class="btn @if($role->active==0) btn-info @else btn-red @endif w-100" name="btnState">Confirmar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -170,5 +170,12 @@
 
 @endsection
 @section('scripts')
-
+<script>
+    $('#btnActivar').on('click', function(){
+        $("#modalRolEstado").modal('show');
+    })
+    $('#btnEliminar').on('click', function(){
+        $("#modalRolDelete").modal('show');
+    })
+</script>
 @endsection
