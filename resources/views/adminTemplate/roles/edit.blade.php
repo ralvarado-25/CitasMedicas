@@ -69,7 +69,7 @@
             </div>
         @endif
         {!!Form::model($role, ['route'=>['roles.update', code($role->id)],'method'=>'POST', 'id'=>'formEditRoles', 'onsubmit'=>'btnSubmit.disabled = true; return true;' ]) !!}
-            <div class="row" data-step="1" data-intro="Introduzca un nombre para el Rol a editar en el campo <b>Nombre del Rol</b> y una pequeña descripción sobre este rol.">
+            <div class="row">
                 <div class="form-group col-md-4">
                     <label id="name--label">* Nombre del rol</label>
                     <input type="text" name="name" class="form-control" value="{{$role->name}}">
