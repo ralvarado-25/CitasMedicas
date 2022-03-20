@@ -6581,7 +6581,11 @@ fieldset:disabled .btn {
 }
 
 .border-yellow {
-    border-color: #3FBBC0 !important
+    border-color: #C68400 !important
+}
+
+.border-orange{
+    border-color: #f76707 !important
 }
 
 .border-1 {

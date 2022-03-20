@@ -17,4 +17,12 @@ class RoleController extends Controller
         Session::put('item', '3.');
         return view("adminTemplate.roles.index", compact('roles'));
     }
+
+    public function show($id){
+        $role = Role::findOrFail(decode($id));
+        $permissions = $role->permissions()->where('active',1)->orderBy('parent_id')->get();
+        Session::put('item', '3.');
+        return view('adminTemplate.roles.show',compact('role', 'permissions'));
+    }
+
 }
