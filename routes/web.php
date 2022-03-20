@@ -42,4 +42,3 @@ Route::middleware(['auth'])->group(function(){
 Route::get('/citas', 'CitasController@index')->name('citas.index');
 Route::get('/especialidades', 'EspecialidadesController@index')->name('especialidades.index');
 Route::get('/usuarios', 'UserController@index')->name('user.index');
-Route::get('/roles', 'RoleController@index')->name('roles.index');
