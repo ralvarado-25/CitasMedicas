@@ -15,7 +15,7 @@
                         Dentalife
                     </div>
                     <h2 class="page-title">
-                        <i class="fa fa-globe-americas"></i> &nbsp;
+                        <img src="{{asset('icons/role.svg')}}" class="icon icon-tabler"> &nbsp;
                         Rol&nbsp; <b>{{$role->name}}</b> &nbsp;&nbsp;
                     </h2>
                 </div>
@@ -39,10 +39,10 @@
 @section('contenido')
     {{-- EL CONTENIDO GRAL DE LA VISTA IRA AQUI --}}
     <div class="col-lg-12">
-        <div class="row" style="margin-bottom:20px" data-step="2" data-intro="Usando estos botones puede editar, desactivar y eliminar el Rol <b>{{$role->name}}</b>">
+        <div class="row" style="margin-bottom:20px">
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="text-center">
-                    <a href="/roles/{{code($role->id)}}/edit" class="btn btn-ghost-primary border border-primary">
+                    <a href="/roles/edit/{{code($role->id)}}" class="btn btn-ghost-primary border border-primary">
                         <i class="fa fa-edit"></i>&nbsp; Modificar rol
                     </a>
                 </div>
@@ -142,7 +142,7 @@
                                 <tr>
                                     <td>
                                         <div class="row">
-                                            <div class="col-lg-12 col-md-6 col-sm-12 col-xs-12 font-weight-bold text-yellowdark">
+                                            <div class="col-lg-12 col-md-6 col-sm-12 col-xs-12 font-weight-bold text-primarydark">
                                                 {{ permisoName($permission->parent_id) }}
                                             </div>
                                             @foreach ($permissions->where('parent_id',$permission->parent_id) as $permChild)

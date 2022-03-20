@@ -30,6 +30,6 @@ Route::get('/plantillaMail', 'EjemploController@plantillaMail')->name('ejemplo.m
 Route::get('/roles', 'RoleController@index')->name('roles.index');
 Route::get('/roles/show/{role}','RoleController@show')->name('roles.show');
 Route::post('/roles/{role}','RoleController@update')->name('roles.update');
-Route::get('/roles/{id}/edit','RoleController@edit')->name('roles.edit');
+Route::get('/roles/edit/{id}','RoleController@edit')->name('roles.edit');
 Route::get('/roles_change/{role}','RoleController@changestatus')->name('roles.changestatus');
 
