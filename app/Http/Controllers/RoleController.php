@@ -93,13 +93,19 @@ class RoleController extends Controller
             'description.required'  => 'El campo descripción es obligatorio',
             'name.max'  => 'El campo descripción no debe contener más de 190 caracteres',
             'permissions.min'  => 'Debe asignar al menos 1 permiso',
+            'rolBorrar.required'  => 'EL CAMPO CONTRASEÑA ES OBLIGATORIO',
         ];
-        $validateArray = [
+
+        $request->validate([
+            'rolBorrar' => ['required', function ($attribute, $value, $fail) {
+                if (!\Hash::check($value, Auth::user()->password)) {
+                    return $fail(__('La contraseña ingresada no coincide con la almacenada en el sistema.'));
+                }
+            }],
             'name'=>'required|max: 190',
             'description'=>'required|max: 190',
             'permissions' => 'min:1',
-        ];
-        $request->validate($validateArray,$messages);
+        ],$messages);
 
         $role = Role::find(decode($id));
         $role->name =$request->name;
