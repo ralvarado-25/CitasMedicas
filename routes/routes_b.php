@@ -35,4 +35,4 @@ Route::get('/roles/edit/{id}','RoleController@edit')->name('roles.edit');
 Route::get('/roles_change/{role}','RoleController@changestatus')->name('roles.changestatus');
 Route::get('/roles/create','RoleController@create')->name('roles.create');
 Route::post('/roles_store','RoleController@store')->name('roles.store');
-Route::delete('/roles/{id}','RoleController@destroy')->name('roles.destroy');
+Route::post('/roles_delete/{id}','RoleController@destroy')->name('roles.destroy');

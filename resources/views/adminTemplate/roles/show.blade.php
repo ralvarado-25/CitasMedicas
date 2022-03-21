@@ -101,12 +101,11 @@
 
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="text-center">
-                    {!! Form::open(['route'=>['roles.destroy', $role->id], 'method'=>'DELETE']) !!}
+                    {!! Form::open(['route'=>['roles.destroy', $role->id], 'id'=>'formDeleteRol', 'method'=>'POST', 'onsubmit'=>'btnSubmitEliminar.disabled = true; return true;' ]) !!}
                         <button type="button" class="btn btn-ghost-danger border border-danger" id="btnEliminar">
                             <i class="fa fa-trash-alt" ></i>&nbsp; Eliminar rol
                         </button>
-
-                        {{-- modal de estado --}}
+                        {{-- modal para eliminar --}}
                         <div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" id="modalRolDelete" data-backdrop="static">
                             <div class="modal-dialog modal-sm modal-dialog-centered">
                                 <div class="modal-content">
@@ -121,21 +120,32 @@
                                             <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
                                             <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                                         </svg>
-                                        <h3>¿Está seguro?</h3>
-                                        <div class="text-muted">
-                                            ¿Está seguro de eliminar el rol <b>{{$role->name}}</b>?
+                                        <h3>¿Está seguro de eliminar el rol <b>{{$role->name}}</b>?</h3>
+
+                                        <p class="text-justify">
+                                            Esta acción no se puede deshacer, esto eliminará de forma permanente el rol y sus permisos asociados.
+                                        </p>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-2" id="rolBorrar--label">
+                                            <label> Por favor escriba su contraseña para confirmar</label>
+                                            <div class='input-group'>
+                                                <input id="password1" type='password' class="pass_quit form-control" name="rolBorrar" style="border-right: 0px" placeholder="Escriba su contraseña" autocomplete="off" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-eye-open" id="pass_first" title="Mostrar Contraseña"></span>
+                                                </span>
+                                            </div>
+                                            <span class="text-red" id="rolBorrar-error"></span>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <div class="w-100">
                                             <div class="row">
                                                 <div class="col">
-                                                    <a class="btn @if(themeMode() == 'D') btn-secondary @endif w-100" data-dismiss="modal">
+                                                    <a class="btn w-100" data-dismiss="modal">
                                                         Cancelar
                                                     </a>
                                                 </div>
                                                 <div class="col">
-                                                    <button type="submit" class="btn btn-red w-100" name="btnEliminar">Eliminar</button>
+                                                    <button type="submit" class="btn btn-red w-100" name="btnSubmitEliminar">Eliminar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -225,5 +235,25 @@
     $('#btnEliminar').on('click', function(){
         $("#modalRolDelete").modal('show');
     })
+
+    $( "#pass_first" ).click(function() {
+        if($(this).hasClass('glyphicon-eye-open')){
+            $('#password1').removeAttr('type');
+            $('#pass_first').attr('title', 'Ocultar Contraseña');
+            $('#pass_first').addClass('glyphicon-eye-close').removeClass('glyphicon-eye-open');
+        }else{
+            $('#password1').attr('type','password');
+            $('#pass_first').attr('title', 'Mostrar Contraseña');
+            $('#pass_first').addClass('glyphicon-eye-open').removeClass('glyphicon-eye-close');
+        }
+    });
+</script>
+
+{{-- ===========================================================================================
+                                            VALIDACION
+=========================================================================================== --}}
+<script>
+    var campos = ['rolBorrar'];
+    ValidateAjax("formDeleteRol",campos,"btnSubmitEliminar","{{ route('roles.destroy',code($role->id) )}}","POST","/roles");
 </script>
 @endsection

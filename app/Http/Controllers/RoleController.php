@@ -10,7 +10,8 @@ use Spatie\Permission\Models\Role;
 use App\Permission;
 use Session;
 use PDF;
-use Mail;
+use Auth;
+use Illuminate\Support\Facades\Hash;
 class RoleController extends Controller
 {
     public function index (Request $request){
@@ -127,11 +128,22 @@ class RoleController extends Controller
         return back();
     }
 
-    public function destroy($id){
-        $role = Role::findOrFail($id);
+    public function destroy(Request $request, $id){
+        $messages = [
+            'rolBorrar.required'  => 'EL CAMPO CONTRASEÑA ES OBLIGATORIO',
+        ];
+
+        $request->validate([
+            'rolBorrar' => ['required', function ($attribute, $value, $fail) {
+                if (!\Hash::check($value, Auth::user()->password)) {
+                    return $fail(__('La contraseña ingresada no coincide con la almacenada en el sistema.'));
+                }
+            }],
+        ],$messages);
+        $role = Role::findOrFail(decode($id));
         $role->permissions()->detach();
         $role->delete();
         toastr()->error('Eliminado correctamente.','Rol '.$role->name, ['positionClass' => 'toast-bottom-right']);
-        return redirect()->action('RoleController@index');
+        return  \Response::json(['success' => '1']);
     }
 }
