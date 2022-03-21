@@ -68,8 +68,8 @@
                 <a class="btn-close" data-bs-dismiss="alert" aria-label="close" ></a>
             </div>
         @endif
-        {!!Form::model($role, ['route'=>['roles.update', code($role->id)],'method'=>'POST', 'id'=>'formEditRoles', 'onsubmit'=>'btnSubmit.disabled = true; return true;' ]) !!}
-            <div class="row" data-step="1" data-intro="Introduzca un nombre para el Rol a editar en el campo <b>Nombre del Rol</b> y una pequeña descripción sobre este rol.">
+        {!!Form::model($role, ['route'=>['roles.update', code($role->id)],'method'=>'POST', 'id'=>'formEditRoles']) !!}
+            <div class="row">
                 <div class="form-group col-md-4">
                     <label id="name--label">* Nombre del rol</label>
                     <input type="text" name="name" class="form-control" value="{{$role->name}}">
@@ -142,7 +142,20 @@
 
             <input type="text" id="tabinput" name="tabinput" value="{{  $contid }}" hidden>
             <div class="box-footer">
-                <button class="btn btn-primary pull-right" type="submit" name="btnSubmit">Actualizar rol</button>
+                <div class="pull-right">
+                    <div class="mb-3">
+                        <label class="text-primarydark"> Por favor escriba su contraseña para confirmar los cambios</label>
+                        <div class='input-group'>
+                            <input id="password1" type='password' class="pass_quit form-control" name="rolBorrar" style="border-right: 0px" placeholder="Escriba su contraseña" autocomplete="off" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-eye-open" id="pass_first" title="Mostrar Contraseña"></span>
+                            </span>
+                        </div>
+                        <span class="text-red" id="rolBorrar-error"></span>
+                    </div>
+                    <button class="btn btn-primary pull-right" type="submit" name="btnSubmit">Actualizar rol</button>
+                </div>
+
             </div>
         {!!Form::close()!!}
     </div>
@@ -174,15 +187,25 @@
             var pk= $(this).attr('data-pk');
             $(".checkparent"+pk+"").prop('checked', true);
         });
+
+        $( "#pass_first" ).click(function() {
+            if($(this).hasClass('glyphicon-eye-open')){
+                $('#password1').removeAttr('type');
+                $('#pass_first').attr('title', 'Ocultar Contraseña');
+                $('#pass_first').addClass('glyphicon-eye-close').removeClass('glyphicon-eye-open');
+            }else{
+                $('#password1').attr('type','password');
+                $('#pass_first').attr('title', 'Mostrar Contraseña');
+                $('#pass_first').addClass('glyphicon-eye-open').removeClass('glyphicon-eye-close');
+            }
+        });
     </script>
 
     {{-- ===========================================================================================
                                                 VALIDACION
     =========================================================================================== --}}
     <script>
-        var campos = ['name','description','permissions'];
-        var contId =  $("#tabinput").val();
-        contId = '?contid='+contId;
+        var campos = ['name','description','permissions','rolBorrar'];
         ValidateAjaxRole("formEditRoles",campos,"btnSubmit","{{ route('roles.update',code($role->id) )}}","POST","/roles/edit/{{code($role->id)}}");
 
         function ValidateAjaxRole(idform,fields,buttonname,routeform,methodform,urlback){

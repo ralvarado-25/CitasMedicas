@@ -42,7 +42,11 @@
     {{-- Botones para añadir nuevo registro --}}
     <div class="col-auto ms-auto d-print-none">
         <div class="btn-list">
-            {{-- los botones iran aqui --}}
+            <a href="/roles/create" >
+                <button class="btn btn btn-primary btn-pill">
+                    <i class="fa fa-plus fa-md" ></i> &nbsp; Rol</span>
+                </button>
+            </a>
         </div>
     </div>
 @endsection
