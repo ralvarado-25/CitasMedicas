@@ -72,12 +72,12 @@
             <div class="row">
                 <div class="form-group col-md-4">
                     <label id="name--label">* Nombre del rol</label>
-                    <input type="text" name="name" class="form-control" value="{{$role->name}}">
+                    <input type="text" name="name" class="form-control" value="{{$role->name}}" placeholder="Nombre del rol">
                     <span class="text-red" id="name-error"></span>
                 </div>
                 <div class="form-group col-md-8">
                     <label id="description--label">* Descripción del rol</label>
-                    <input type="text" name="description" class="form-control" value="{{$role->description}}">
+                    <input type="text" name="description" class="form-control" value="{{$role->description}}" placeholder="Descripción del rol">
                     <span class="text-red" id="description-error"></span>
                 </div>
             </div>

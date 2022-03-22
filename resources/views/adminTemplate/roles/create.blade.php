@@ -56,12 +56,12 @@
             <div class="row" data-step="1" data-intro="Introduzca un nombre para el nuevo Rol a crear en el campo <b>Nombre del Rol</b> y una pequeña descripción sobre este rol.">
                 <div class="form-group col-md-4">
                     <label id="name--label">* Nombre del rol</label>
-                    <input type="text" name="name" class="form-control">
+                    <input type="text" name="name" class="form-control" placeholder="Nombre del rol">
                     <span class="text-red" id="name-error"></span>
                 </div>
                 <div class="form-group col-md-8">
                     <label id="description--label">* Descripción del rol</label>
-                    <input type="text" name="description" class="form-control">
+                    <input type="text" name="description" class="form-control" placeholder="Descripción del rol">
                     <span class="text-red" id="description-error"></span>
                 </div>
             </div>

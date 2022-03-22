@@ -14,6 +14,9 @@ use Auth;
 use Illuminate\Support\Facades\Hash;
 class RoleController extends Controller
 {
+    /**
+     * Muestra la vista principal de listado de roles
+     */
     public function index (Request $request){
         $roles = Role::get();
         Session::put('item', '3.');
@@ -120,20 +123,25 @@ class RoleController extends Controller
         return  \Response::json(['success' => '1','contid'=> $contid]);
     }
 
+    /**
+     * Funcion para cambiar de estado
+     */
     public function changestatus($id){
         $role = Role::findOrFail(decode($id));
         if ($role->active=='0') {
             $role->active='1';
-            $role->save();
             toastr()->success('Activado correctamente.','Rol '.$role->name, ['positionClass' => 'toast-bottom-right']);
         }else {
             $role->active='0';
-            $role->save();
             toastr()->error('Desactivado correctamente.','Rol '.$role->name, ['positionClass' => 'toast-bottom-right']);
         }
+        $role->save();
         return back();
     }
 
+    /**
+     * Funcion para eliminar el rol
+     */
     public function destroy(Request $request, $id){
         $messages = [
             'rolBorrar.required'  => 'EL CAMPO CONTRASEÑA ES OBLIGATORIO',
