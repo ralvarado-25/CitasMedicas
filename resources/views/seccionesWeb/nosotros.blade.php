@@ -11,24 +11,27 @@
 
         <div class="row">
             <div class="col-lg-6" data-aos="fade-right">
-            <img src="{{ asset('/imagenes/negocio.jpg') }}" class="img-fluid" alt="">
+            <img src="{{ asset('/imagenes/negocio.jpeg') }}" class="img-fluid" alt="">
             </div>
             <div class="col-lg-6 pt-4 pt-lg-0 content" data-aos="fade-left">
-            <h3>Voluptatem dignissimos provident quasi corporis voluptates sit assumenda.</h3>
+            <h3>MISION</h3>
             <p class="fst-italic">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                magna aliqua.
+                Implantar y desarrollar un nuevo concepto de odontología multidisciplinar, capaz de ofertar y realizar todo tipo de tratamientos dentales, y teniendo como objetivos principales:
             </p>
             <ul>
-                <li><i class="bi bi-check-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-                <li><i class="bi bi-check-circle"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
-                <li><i class="bi bi-check-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</li>
+                <li><i class="bi bi-check-circle"></i> Solucionar los problemas bucodentales de nuestros pacientes.</li>
+                <li><i class="bi bi-check-circle"></i> Concienciar a la sociedad de la importancia y necesidad de cuidar la salud bucodental, a través del seguimiento y la prevención.</li>
+                <li><i class="bi bi-check-circle"></i> Investigar y desarrollar nuevas técnicas y materiales que permitan dar soluciones a todos los tratamientos que se realizan en nuestra clínica.</li>
             </ul>
-            <p>
-                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                culpa qui officia deserunt mollit anim id est laborum
-            </p>
+            <h3>VISION</h3>
+            <ul>
+               <li><i class="bi bi-check-circle"></i> Clínica Dental Dentallife, es un consultorio que pretende ser un referente a seguir dentro del sector de la odontología, por la calidad de su trabajo y por el trato humano.
+Para ello hacemos especial hincapié en el trato preferente a nuestros pacientes, poniendo todo nuestro saber hacer para solucionar de la forma mas satisfactoria sus problemas de salud dental. </li>
+            </ul>
+            <h3>VALORES</h3>
+            <ul>
+                <li><i class="bi bi-check-circle"></i> valores que Clínica Dental Dentalife promueve entre sus pacientes y empleados se pueden resumir en la búsqueda continua de resultados que satisfagan a todos los miembros de nuestra organización, siempre teniendo en cuenta a nuestros pacientes.</li>
+            </ul>
             </div>
         </div>
 
@@ -46,7 +49,7 @@
                 <i class="fas fa-user-md"></i>
                 <span data-purecounter-start="0" data-purecounter-end="85" data-purecounter-duration="1" class="purecounter"></span>
 
-                <p><strong>Doctors</strong> consequuntur quae qui deca rode</p>
+                <p><strong>Casos de exito</strong> </p>
                 <a href="#">Saber más &raquo;</a>
             </div>
             </div>
@@ -55,7 +58,7 @@
             <div class="count-box">
                 <i class="far fa-hospital"></i>
                 <span data-purecounter-start="0" data-purecounter-end="26" data-purecounter-duration="1" class="purecounter"></span>
-                <p><strong>Departments</strong> adipisci atque cum quia aut numquam delectus</p>
+                <p><strong>Asesorando al paciente</strong></p>
                 <a href="#">Saber más &raquo;</a>
             </div>
             </div>
@@ -64,7 +67,7 @@
             <div class="count-box">
                 <i class="fas fa-flask"></i>
                 <span data-purecounter-start="0" data-purecounter-end="14" data-purecounter-duration="1" class="purecounter"></span>
-                <p><strong>Research Lab</strong> aut commodi quaerat. Aliquam ratione</p>
+                <p><strong>Años de experiencia</strong></p>
                 <a href="#">Saber más &raquo;</a>
             </div>
             </div>
@@ -73,7 +76,7 @@
             <div class="count-box">
                 <i class="fas fa-award"></i>
                 <span data-purecounter-start="0" data-purecounter-end="150" data-purecounter-duration="1" class="purecounter"></span>
-                <p><strong>Awards</strong> rerum asperiores dolor molestiae doloribu</p>
+                <p><strong>Pacientes</strong></p>
                 <a href="#">Saber más &raquo;</a>
             </div>
             </div>
@@ -88,7 +91,7 @@
         <div class="container" data-aos="fade-up">
             <div class="section-title">
                 <h2>PERSONAL A CARGO</h2>
-                <p>Dentalife cuenta con personal capacitado para brindar el mejor servicio a sus clientes esta comformado por el Doctor Erick y su asistente Sarah ambos con un buen.</p>
+                <p>Dentalife cuenta con personal capacitado para brindar el mejor servicio a sus clientes esta comformado por el Doctor Erick especialista en su area y su asistente Sarah ambos con un buen desempeño tanto laboral como academico.</p>
             </div>
 
             <div class="row">
