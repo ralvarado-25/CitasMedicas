@@ -6,21 +6,7 @@
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-nav flex-row order-md-last">
-                <div class="nav-item dropdown d-none d-md-flex me-3">
-                    <a href="#" class="nav-link px-0" data-toggle="dropdown" tabindex="-1" aria-label="Mostrar motificaciones">
-                        <svg class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /><path d="M9 17v1a3 3 0 0 0 6 0v-1" /><path d="M21 6.727a11.05 11.05 0 0 0 -2.794 -3.727" /><path d="M3 6.727a11.05 11.05 0 0 1 2.792 -3.727" />
-                        </svg>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end">
-                        <span class="dropdown-item dropdown-header">Notificaciones - {{ date("d/m/Y H:i") }}</span>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item" >
-                            No tiene Notificaciones nuevas
-                        </a>
-                    </div>
-                </div>
-                <div class="nav-item me-3 divIconLogout" style="display:none">
+                <div class="nav-item me-3 divIconLogout">
                     <a class="nav-link px-0 cursor-pointer logoutModal" data-toggle="tooltipLogout"  title="Cerrar sesión">
                         <svg class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 6a7.75 7.75 0 1 0 10 0" /><line x1="12" y1="4" x2="12" y2="12" />
@@ -50,12 +36,10 @@
                                 <span class="small">{{ Auth::user()->cargo}} </span>
                             </div>
                         </a>
-                        {{-- @if(Gate::check('users.profile')) --}}
-                            <a class="dropdown-item" href="/perfil_usuario">
-                                <i class="fe fe-user icon dropdown-item-icon"></i>
-                                Perfil de usuario
-                            </a>
-                        {{-- @endif --}}
+                        <a class="dropdown-item" href="">
+                            <i class="fe fe-user icon dropdown-item-icon"></i>
+                            Perfil de usuario
+                        </a>
                         <a class="dropdown-item cursor-pointer bntCerrarSesion">
                             <i class="fe fe-log-out icon dropdown-item-icon iconCerrarSesion"></i>
                             <span class="textCerrarSesion">
