@@ -9,14 +9,13 @@
     <meta name="author" content="Systemzone" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Dentalife - Iniciar sesión</title>
+    <title>Dentalife</title>
 
     <link rel="shortcut icon" href="{{asset('favicon.png')}}" />
     <link rel="stylesheet" href="{{asset('/templates/tabler/dist/css/tabler.min.css')}}" />
     <link rel="stylesheet" href="{{asset('/plugins/iCheck/all.css')}}">
     <link rel="stylesheet" href="{{asset('/plugins/font-awesome1/css/font-awesome.min.css')}}">
     <link rel="stylesheet" href="{{asset('/plugins/font-awesome/css/all.css')}}">
-    {{-- <link rel="stylesheet" href="{{asset('/components/vali-admin/css/main.css')}}"> --}}
     <style>
         body {
             font-family: 'nunito', sans-serif;
