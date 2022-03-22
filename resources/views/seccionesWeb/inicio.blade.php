@@ -7,30 +7,31 @@
             <!-- Slide 1 -->
             <div class="carousel-item active" style="background-image: url( {{ asset('/imagenes/slider/slider-1.jpg') }} )">
                 <div class="container">
-                <h2>Bienvenido a<span>Dentalife</span></h2>
-                <p>Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel.</p>
-                <a href="#about" class="btn-get-started scrollto">Read More</a>
+                <h2>Bienvenido a <span>Dentalife</span></h2>
+                <p>Te damos la bienvenida a nuestra clinica dental. Solicita una cita y te atenderemos sin ningun compromiso.Nuestro equipo de profecionales dentistas se encargara de que te sientas como en casa.</p>
+                <a href="#about" class="btn-get-started scrollto">Leer mas</a>
                 </div>
             </div>
 
             <!-- Slide 2 -->
             <div class="carousel-item" style="background-image: url( {{ asset('/imagenes/slider/slider-2.jpg') }} )">
                 <div class="container">
-                <h2>Lorem Ipsum Dolor</h2>
-                <p>Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel.</p>
-                <a href="#about" class="btn-get-started scrollto">Read More</a>
+                <h2>Agenda tu cita</h2>
+                <p>Somos una clinica dental en constante crecimiento y con años de experiencia confia de nuestros servicios y agenda tu cita.Por que verse bien es sentirse bien.</p>
+                <a href="#about" class="btn-get-started scrollto">Leer mas</a>
                 </div>
             </div>
 
             <!-- Slide 3 -->
             <div class="carousel-item" style="background-image: url( {{ asset('/imagenes/slider/slider-3.png') }} )">
                 <div class="container">
-                <h2>Sequi ea ut et est quaerat</h2>
-                <p>Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel.</p>
-                <a href="#about" class="btn-get-started scrollto">Read More</a>
+                <h2>Somos Dentalife</h2>
+                <p>Somos una clinica dental en crecimiento y aún tiene muchas metas para ser una empresa de gran prestigio y renombre, y trata de brindar a la población un servicio de calidad, eficacia, buen trato y precios accesibles.</p>
+                <a href="#about" class="btn-get-started scrollto">leer mas</a>
                 </div>
             </div>
         </div>
+
 
         <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
         <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
@@ -54,7 +55,7 @@
         <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
             <div class="icon"><i class="fas fa-heartbeat"></i></div>
             <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-            <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+            <p class="description">Para calmar y corromper los placeres, qué dolores y qué molestias se reciben</p>
         </div>
         </div>
 

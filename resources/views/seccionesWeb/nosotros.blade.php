@@ -6,7 +6,7 @@
 
         <div class="section-title">
             <h2 class="prueba">NOSOTROS</h2>
-            <p>Somos un consultorio con varios años de experiencia en el area dental.</p>
+            <p>Somos la Clínica Dental “DentaLife” está en crecimiento y aún tiene muchas metas para ser una empresa de gran prestigio y renombre, y trata de brindar a la población un servicio de calidad, eficacia, buen trato y precios accesibles.</p>
         </div>
 
         <div class="row">
@@ -47,7 +47,7 @@
                 <span data-purecounter-start="0" data-purecounter-end="85" data-purecounter-duration="1" class="purecounter"></span>
 
                 <p><strong>Doctors</strong> consequuntur quae qui deca rode</p>
-                <a href="#">Find out more &raquo;</a>
+                <a href="#">Saber más &raquo;</a>
             </div>
             </div>
 
@@ -56,7 +56,7 @@
                 <i class="far fa-hospital"></i>
                 <span data-purecounter-start="0" data-purecounter-end="26" data-purecounter-duration="1" class="purecounter"></span>
                 <p><strong>Departments</strong> adipisci atque cum quia aut numquam delectus</p>
-                <a href="#">Find out more &raquo;</a>
+                <a href="#">Saber más &raquo;</a>
             </div>
             </div>
 
@@ -65,7 +65,7 @@
                 <i class="fas fa-flask"></i>
                 <span data-purecounter-start="0" data-purecounter-end="14" data-purecounter-duration="1" class="purecounter"></span>
                 <p><strong>Research Lab</strong> aut commodi quaerat. Aliquam ratione</p>
-                <a href="#">Find out more &raquo;</a>
+                <a href="#">Saber más &raquo;</a>
             </div>
             </div>
 
@@ -74,7 +74,7 @@
                 <i class="fas fa-award"></i>
                 <span data-purecounter-start="0" data-purecounter-end="150" data-purecounter-duration="1" class="purecounter"></span>
                 <p><strong>Awards</strong> rerum asperiores dolor molestiae doloribu</p>
-                <a href="#">Find out more &raquo;</a>
+                <a href="#">Saber más &raquo;</a>
             </div>
             </div>
 
@@ -88,14 +88,14 @@
         <div class="container" data-aos="fade-up">
             <div class="section-title">
                 <h2>PERSONAL A CARGO</h2>
-                <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+                <p>Dentalife cuenta con personal capacitado para brindar el mejor servicio a sus clientes esta comformado por el Doctor Erick y su asistente Sarah ambos con un buen.</p>
             </div>
 
             <div class="row">
                 <div class="offset-lg-3 col-lg-3 offset-md-0 col-md-6 d-flex align-items-stretch text-center">
                     <div class="member" data-aos="fade-up" data-aos-delay="100">
                     <div class="member-img">
-                        <img src="{{ asset('/imagenes/doctors/doctors-1.jpg') }}" class="img-fluid" alt="">
+                        <img src="{{ asset('/imagenes/doctors/doctor-1.jpeg') }}" class="img-fluid" alt="">
                         <div class="social">
                         <a href=""><i class="bi bi-twitter"></i></a>
                         <a href=""><i class="bi bi-facebook"></i></a>
@@ -104,8 +104,8 @@
                         </div>
                     </div>
                     <div class="member-info">
-                        <h4>Walter White</h4>
-                        <span>Chief Medical Officer</span>
+                        <h4>Dr. Erick Abel Cacasaca Avila</h4>
+                        <span>Director Medico</span>
                     </div>
                     </div>
                 </div>
@@ -113,7 +113,7 @@
                 <div class="col-lg-3 offset-md-0 col-md-6 d-flex align-items-stretch">
                     <div class="member" data-aos="fade-up" data-aos-delay="200">
                     <div class="member-img">
-                        <img src="{{ asset('/imagenes/doctors/doctors-2.jpg') }}" class="img-fluid" alt="">
+                        <img src="{{ asset('/imagenes/doctors/doctor-2.jpeg') }}" class="img-fluid" alt="">
                         <div class="social">
                         <a href=""><i class="bi bi-twitter"></i></a>
                         <a href=""><i class="bi bi-facebook"></i></a>
@@ -122,8 +122,8 @@
                         </div>
                     </div>
                     <div class="member-info">
-                        <h4>Sarah Jhonson</h4>
-                        <span>Anesthesiologist</span>
+                        <h4>Sarah Aliaga Mendoza</h4>
+                        <span>Asistente</span>
                     </div>
                     </div>
                 </div>
