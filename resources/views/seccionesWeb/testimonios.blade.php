@@ -4,7 +4,7 @@
 
         <div class="section-title">
             <h2>TESTIMONIOS</h2>
-            <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+            <p>Qué cuentan nuestros pacientes de su experiencia en nuestra clínica.</p>
         </div>
 
         <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
@@ -14,12 +14,11 @@
                 <div class="testimonial-item">
                 <p>
                     <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                    Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                    Una clínica de grandísima calidad. Se las recomiendo. Si tienes que ponerte un implante o tienes problemas estéticos en la encía, no lo dudes, el doctor Erick Cacasaca es uno de los mejores. Y ni que decir de la atencion al cliente por parte de la asitente te hace sentir como si estuvieras en casa.
                     <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                 </p>
-                <img src="{{ asset('/imagenes/testimonials/testimonials-1.jpg') }}" class="testimonial-img" alt="">
-                <h3>Saul Goodman</h3>
-                <h4>Ceo &amp; Founder</h4>
+                <img src="{{ asset('/imagenes/testimonials/testimonio1.jpg') }}" class="testimonial-img" alt="">
+                <h3>Saul Torres Colque</h3>
                 </div>
             </div><!-- End testimonial item -->
 
@@ -27,12 +26,11 @@
                 <div class="testimonial-item">
                 <p>
                     <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                    Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
+                    Erick es un dentista brillante respaldado por su excelente equipo. Al utilizar su increíble conocimiento y pasión por la odontología junto con la tecnología más actualizada, logra un servicio incomparable para sus pacientes. El extenso trato que recibí va mucho más allá de mis expectativas y estoy encantada con el resultado.
                     <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                 </p>
-                <img src="{{ asset('/imagenes/testimonials/testimonials-2.jpg') }}" class="testimonial-img" alt="">
-                <h3>Sara Wilsson</h3>
-                <h4>Designer</h4>
+                <img src="{{ asset('/imagenes/testimonials/testimonio2.jpg') }}" class="testimonial-img" alt="">
+                <h3>Fernanda Quispe Alcala</h3>
                 </div>
             </div><!-- End testimonial item -->
 
@@ -40,12 +38,11 @@
                 <div class="testimonial-item">
                 <p>
                     <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                    Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
+                    Puedes estar totalmente tranquilo poniéndote en sus manos. Sin duda cuando encuentras una clínica así no necesitas buscar otra. A mi me ha tratado Erick y tras pasar por muchos dentistas es el mejor sin duda, no sólo por la profesionalidad, también por la atención y la amabilidad. En horabuena a todo el equipo.
                     <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                 </p>
-                <img src="{{ asset('/imagenes/testimonials/testimonials-3.jpg') }}" class="testimonial-img" alt="">
-                <h3>Jena Karlis</h3>
-                <h4>Store Owner</h4>
+                <img src="{{ asset('/imagenes/testimonials/testimonio3.jpg') }}" class="testimonial-img" alt="">
+                <h3>Jhenny Achata Molina</h3>
                 </div>
             </div><!-- End testimonial item -->
 
@@ -53,12 +50,11 @@
                 <div class="testimonial-item">
                 <p>
                     <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                    Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
+                    La verdad que después de haber pasado por varias clínicas dentales, para mi es la mejor, tanto en la atención recibida, las higienistas y sobretodo con el Dr. Erick , ya que gracias a él se me han quitado todos los miedos que le había cogido a los dentistas. Un placer haberlos conocido a todos.
                     <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                 </p>
-                <img src="{{ asset('/imagenes/testimonials/testimonials-4.jpg') }}" class="testimonial-img" alt="">
-                <h3>Matt Brandon</h3>
-                <h4>Freelancer</h4>
+                <img src="{{ asset('/imagenes/testimonials/testimonio4.jpg') }}" class="testimonial-img" alt="">
+                <h3>Scarlet Camara Fernandez</h3>
                 </div>
             </div><!-- End testimonial item -->
 
@@ -66,12 +62,11 @@
                 <div class="testimonial-item">
                 <p>
                     <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                    Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
+                    Qué puedo decir de mi dentista favorito que no sepa ya. Su profesionalidad es la mejor, su equipo magnífico. La asistente nos transmiten cortesia desde la entrada de la clínica. Hay mucha dedicación de todos y el resultado final es excelente. Seguir así y el suceso seguirá también. Gracias por todo.
                     <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                 </p>
-                <img src="{{ asset('/imagenes/testimonials/testimonials-5.jpg') }}" class="testimonial-img" alt="">
-                <h3>John Larson</h3>
-                <h4>Entrepreneur</h4>
+                <img src="{{ asset('/imagenes/testimonials/testimonio5.jpg') }}" class="testimonial-img" alt="">
+                <h3>Efrain Peñaloza Cabrera</h3>
                 </div>
             </div><!-- End testimonial item -->
 
