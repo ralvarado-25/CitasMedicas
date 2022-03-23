@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Mail\NuevoUsuario;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 use Session;
 use PDF;
 use Mail;
@@ -26,5 +27,17 @@ class UserController extends Controller
         $filtro = 'ejemplo de variable';
         Session::put('item', '2.');
         return view("adminTemplate.users.index", compact('usersactive','usersinactive','usersdelete','usersa','usersi'));
+    }
+
+    /**
+     * Muestra los detalles de un usuario en específico
+     */
+    public function show( Request $request, $cod){
+        $user = User::findOrFail(decode($cod));
+        if($user->active == '1'){
+            $rol = Role::select('name')->where('id',$user->role_id)->first();
+            Session::put('item', '2.');
+            return view('adminTemplate.users.show',compact('user','rol'));
+        }else   abort(404);
     }
 }
