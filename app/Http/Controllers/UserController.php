@@ -398,6 +398,29 @@ class UserController extends Controller
         return  \Response::json(['success' => '1']);
     }
 
+    /**
+     * Carga la ventana de confirmacion para
+     */
+    public function modalCambioEstado($id){
+        $users = User::findOrFail(decode($id));
+        return view('adminTemplate.users.modalCambioEstado', compact('users'));
+    }
+
+    public function cambiarestado($id){
+        $user=User::findOrFail(decode($id));
+        if($user->id != userId()){
+            if ($user->active=='0') {
+                $user->active='1';
+                toastr()->info('Activado correctamente.','Usuario '.userFullName($user->id), ['positionClass' => 'toast-bottom-right']);
+            }else {
+                $user->active='0';
+                toastr()->warning('Desactivado correctamente.','Usuario '.userFullName($user->id), ['positionClass' => 'toast-bottom-right']);
+            }
+            $user->update();
+        }
+        return back();
+    }
+
 
     // ==============================================================================================================================
     //                                                VALIDACIONES LARAVEL

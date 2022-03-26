@@ -80,12 +80,16 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/usuarios_update/{user}','UserController@update')->name('users.update');
     // CAMBIAR IMAGEN DE AVATAR
     Route::post('/useravatar', 'UserController@uploadAvatarImagen')->name('users.avatar');
-
+    //  ACTUALIZAR ROL
     Route::put('/users/{user}/rol','UserController@updaterol')->name('updaterol');
 
+    // PERFIL DE USUARIOS
     Route::get('/perfil_usuario','UserController@perfil')->name('perfil');
     Route::post('updateprofile/{user}','UserController@updateprofile')->name('updateprofile');
 
+    // CAMBIAR ESTADO DE USUARIOS
+    Route::get('/users/modalCambEstado/{id}', 'UserController@modalCambioEstado')->name('users.modalDelete');
+    Route::post('/users/cambiarestado/{id}','UserController@cambiarestado')->name('users.cambiarestado');
 });
 
 
