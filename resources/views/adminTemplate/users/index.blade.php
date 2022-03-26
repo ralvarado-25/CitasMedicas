@@ -139,8 +139,9 @@
                     <th class="hidden"></th>
                     <th width="20%">NOMBRE(S)</th>
                     <th width="20%">E-MAIL</th>
+                    <th width="10%">FECHA DE NACIMIENTO</th>
+                    <th width="10%">ROL</th>
                     <th width="10%">ESTADO</th>
-                    <th width="20%">CARGO</th>
                     <th width="10%">OPERACIONES</th>
                 </tr>
             </thead>
@@ -151,8 +152,9 @@
                     <td class="hidden"></td>
                     <td><input style="width: 100%;font-size:10px" id="user0" class="form-control nopegar" type="text" placeholder="🔍 &nbsp;Buscar" name="nombreb"/></td>
                     <td><input style="width: 100%;font-size:10px" id="user1" class="form-control nopegar" type="text" placeholder="🔍 &nbsp;Buscar" name="emailb"/></td>
-                    <td><input style="width: 100%;font-size:10px" id="user2" class="form-control nopegar" type="text" placeholder="🔍 &nbsp;Buscar" name="estadob"/></td>
+                    <td><input style="width: 100%;font-size:10px" id="user2" class="form-control nopegar" type="text" placeholder="🔍 &nbsp;Buscar" name="fechab"/></td>
                     <td><input style="width: 100%;font-size:10px" id="user3" class="form-control nopegar" type="text" placeholder="🔍 &nbsp;Buscar" name="cargob"/></td>
+                    <td><input style="width: 100%;font-size:10px" id="user4" class="form-control nopegar" type="text" placeholder="🔍 &nbsp;Buscar" name="estadob"/></td>
                     <td></td>
                 </tr>
             </thead>
@@ -171,6 +173,9 @@
 
                         <td style="text-align: left !important"> {!! $user->getName() !!} </td>
                         <td style="text-align: left !important">{{ $user->email }}</td>
+                        <td>{{ date("d/m/Y",strtotime($user->fecha_nacimiento)) }}</td>
+
+                        <td style="text-align: left !important">{{ $user->rolesUsers->name }}</td>
                         <td class="text-center">
                             @if ( $user->active==1 )
                                 <span class="badge badge-pill bg-green">ACTIVO</span>
@@ -178,14 +183,11 @@
                                 <span class="badge badge-pill bg-red">INACTIVO</span>
                             @endif
                         </td>
-                        <td style="text-align: left !important">{{ $user->cargo }}</td>
                         <td>
-                            <a href="/usuarios/{{code($user->id)}}/edit" title="Editar" data-toggle="tooltip">
+                            <a href="/usuarios/edit/{{code($user->id)}}" title="Editar" data-toggle="tooltip">
                                 <svg class="icon text-blue iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" /><path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" /><line x1="16" y1="5" x2="19" y2="8" /></svg>
                             </a>
-                            <a href="/users_privilegios/{{code($user->id)}}/edit" title="Permisos" data-toggle="tooltip">
-                                <svg class="icon text-orange iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="5" y="11" width="14" height="10" rx="2" /><circle cx="12" cy="16" r="1" /><path d="M8 11v-4a4 4 0 0 1 8 0v4" /></svg>
-                            </a>
+
                             @if($user->id != userId())
                                 @if ($user->active==1)
                                     <a rel="modalCambioEstado" style="cursor:pointer" href="/users/modalCambEstado/{{code($user->id)}}" title="Desactivar" data-toggle="tooltip">
