@@ -7,7 +7,7 @@ use App\Mail\NuevoUsuario;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Session;
-use PDF;
+use Auth;
 use Mail;
 use DB;
 use Illuminate\Support\Str;
@@ -16,7 +16,7 @@ use Intervention\Image\Facades\Image as InterventionImage;
 use Illuminate\Http\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
 use Illuminate\Support\Facades\Storage;
-
+use Cookie;
 class UserController extends Controller
 {
     public function index (Request $request){
@@ -190,12 +190,9 @@ class UserController extends Controller
         abort(404);
     }
 
-        /**
+    /**
      * Actualiza los datos de un usuario.
      *
-     * @param  \Illuminate\Http\UserFormularioRequest  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
         $user = User::where('id',decode($id))->first();
@@ -273,12 +270,8 @@ class UserController extends Controller
         return $key;
     }
 
-        /**
+    /**
      * Actualiza el rol de un usuario.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function updaterol(Request $request, $id){
         $user=User::findOrFail($id);
@@ -318,6 +311,93 @@ class UserController extends Controller
         }
         return back();
     }
+
+    /**
+     * Muestra el formulario para que el usuario conectado cambie sus datos.
+     */
+    public function perfil(){
+        Session::put('item', '2.');
+        return view('adminTemplate.users.perfil');
+    }
+
+    /**
+     * Actualiza el perfil del usuario conectado.
+     */
+    public function updateProfile(Request $request, $id){
+        $messages = [
+            'name.required'  => 'El campo Nombre(s) es obligatorio',
+            'name.max'  => 'El campo Nombre(s) debe tener al menos 2 caracteres',
+            'name.min'  => 'El campo Nombre(s) no debe tener más de 50 caracteres',
+            'ap_paterno.required'  => 'El campo Apellido Paterno es obligatorio',
+            'ap_paterno.min'  => 'El campo Apellido Paterno debe tener al menos 2 caracteres',
+            'ap_paterno.max'  => 'El campo Apellido Paterno no debe tener más de 50 caracteres',
+            'fechanac.date_format'  => 'El campo Fecha de Nacimiento no corresponde a una fecha válida',
+            'nrodoc.required' => 'El campo Documento de identidad es obligatorio',
+            'current_password.required'  => 'EL CAMPO "Contraseña Actual" ES OBLIGATORIO',
+            'password_first.min'  => 'El campo Contraseña Nueva debe contener al menos 8 caracteres.',
+            'password_first.required'  => 'EL CAMPO "Contraseña Nueva" ES OBLIGATORIO',
+            'password_first.regex'  => 'EL CAMPO "Contraseña Nueva" NO CUMPLE CON LOS REQUERIMIENTOS',
+            'password_first.required_with' => 'El campo contraseña nueva es obligatorio cuando Contraseña actual está presente.',
+            'new_password.min'  => 'El campo Confirmar Contraseña Nueva debe contener al menos 8 caracteres.',
+            'new_password.required'  => 'EL CAMPO "Confirmar Contraseña Nueva" ES OBLIGATORIO',
+            'new_password.regex'  => 'EL CAMPO "Confirmar Contraseña Nueva" NO CUMPLE CON LOS REQUERIMIENTOS',
+            'new_password.same' => 'Los campos "Contraseña nueva" y "Confirmar contraseña nueva" deben ser iguales',
+            'new_password.same' => 'Los campos "Contraseña nueva" y "Confirmar contraseña nueva" deben ser iguales',
+        ];
+
+        $validateArray = [
+            'name' => 'required|max:40|min:2',
+            'ap_paterno' => 'required|max:50|min:2',
+            'ap_materno' => 'nullable|max:50|min:2',
+            'fechanac' =>'nullable|date_format:d/m/Y',
+            'email' => 'required|email:filter',
+            'nrodoc' => 'required',
+            'celular' => 'max:20|min:3',
+        ];
+
+        if($request->auxpass == 1 ){
+            $request->validate([
+                'current_password' => ['required', function ($attribute, $value, $fail) {
+                    if (!\Hash::check($value, Auth::user()->password)) {
+                        return $fail(__('La contraseña ingresada no coincide con la almacenada en el sistema.'));
+                    }
+                }],
+                'password_first' => 'bail|required_with:current_password|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
+                'new_password' => 'bail|required_with:password_first|min:8|same:password_first|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
+                'name' => 'bail|required|max:40|min:2',
+                'ap_paterno' => 'bail|required|max:50|min:2',
+                'ap_materno' => 'bail|nullable|max:50|min:2',
+                'fechanac' =>'nullable|date_format:d/m/Y',
+                'email' => 'required|email:filter',
+                'nrodoc' => 'bail|required',
+                'celular' => 'max:20|min:3',
+
+            ],$messages);
+            toastr()->success('modificada con éxito.','Contraseña', ['positionClass' => 'toast-bottom-right',]);
+
+        }else   $request->validate($validateArray,$messages);
+
+
+        $user = User::findOrFail(decode($id));
+            if($request->auxpass == 1 && $request->current_password != null && $request->password_first != null && $request->new_password != null){
+                $user->password = bcrypt($request->new_password);
+                if(Cookie::has('login2')){
+                    Cookie::queue(Cookie::forget('login2'));
+                }
+            }
+            $user->name = $request->name;
+            $user->ap_paterno = $request->ap_paterno;
+            $user->ap_materno = $request->ap_materno;
+            $user->fecha_nacimiento = $request->fechanac != null ? convFechaDT($request->fechanac) : null;
+            $user->email = $request->email;
+            $user->cargo = $request->cargo;
+            $user->nro_doc = $request->nrodoc;
+            $user->celular = $request->celular;
+            $user->update();
+        toastr()->info('modificados con éxito.','Datos de perfil ', ['positionClass' => 'toast-bottom-right',]);
+        return  \Response::json(['success' => '1']);
+    }
+
 
     // ==============================================================================================================================
     //                                                VALIDACIONES LARAVEL

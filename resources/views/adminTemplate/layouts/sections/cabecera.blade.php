@@ -36,7 +36,7 @@
                                 <span class="small">{{ Auth::user()->cargo}} </span>
                             </div>
                         </a>
-                        <a class="dropdown-item" href="">
+                        <a class="dropdown-item" href="/perfil_usuario">
                             <i class="fe fe-user icon dropdown-item-icon"></i>
                             Perfil de usuario
                         </a>
