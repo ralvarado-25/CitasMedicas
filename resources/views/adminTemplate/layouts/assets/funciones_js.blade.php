@@ -56,6 +56,32 @@
             });
         });
 
+        // ===========================================================================================
+        //                            MODAL AJAX
+        // ===========================================================================================
+        function modalAjax(relmodal,idmodal,containermodal,hrefReload){
+            $(document).on('click','a[rel='+relmodal+']',function(evt) {
+                evt.preventDefault();
+                var modal = $('#'+idmodal).modal();
+                var modalurl = $(this).attr('href');
+                modal.find('.'+containermodal).load(modalurl, function (responseText, textStatus) {
+                    if ( textStatus === 'success' || textStatus === 'notmodified'){
+                        modal.show();
+                    }
+                    if(textStatus == 'error'){
+                        toastr.options = {
+                            "positionClass": "toast-bottom-right",
+                            "progressBar": true,
+                        };
+                        toastr.error('<b>No puede realizar la acción solicitada</b><br>La página se recargará en un momento.');
+                        setTimeout(function () {
+                            if (hrefReload === undefined || hrefReload === null)    location.reload(true);
+                            else window.location.href = hrefReload;
+                        }, 5000);
+                    }
+                });
+            });
+        }
     </script>
 
     {{-- ===========================================================================================
