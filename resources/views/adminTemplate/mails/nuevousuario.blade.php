@@ -5,7 +5,38 @@
     <meta name="viewport" content="width=device-width">
     <title>Mail Dentalife</title>
     <style>
-
+        body{
+            margin-top:20px;
+        }
+        .fontFamily{
+            font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        .buttonLink{
+            color: #FFF;
+            text-decoration: none;
+            line-height: 2em;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            display: inline-block;
+            border-radius: 5px;
+            text-transform: capitalize;
+            background-color: #3fbbc0;
+            margin: 0;
+            border-color: #3fbbc0;
+            border-style: solid;
+            border-width: 8px 16px;
+        }
+        .urlClass{
+            font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+            box-sizing: border-box;
+            font-size: 12px;
+            color: #999;
+            text-decoration: underline;
+            margin: 0;
+        }
     </style>
 </head>
 
@@ -14,61 +45,98 @@
     @php
         $rutaLogo = public_path().'/logo.png';
     @endphp
-    <table style="box-shadow: 1px 1px 4px 0 #e6e9ef; border-spacing: 0; overflow:hidden; display: block; margin:0 auto; background-color: #ffffff; width: 600px; max-width: 100%;">
-        <thead style="background-color: gray; width: 600px; max-width:100%;">
-            <tr>
-                <th style="border-bottom: solid 5px gray; width: 600px; max-width: 100%; padding: 15px 30px; text-align: left; vertical-align: middle;">
-                    <img id="imgempresa" alt="Amper" src="{{$rutaLogo}}" style="height: 50px">
-                </th>
-            </tr>
-        </thead>
-        <tbody style="width: 600px; max-width: 100%;">
-            <tr>
-                <td style="width: 600px; max-width: 100%; padding: 10px 30px; text-align: center; border-bottom: solid 2px  gray;">
-                    <p style="color: #006699; margin: 0;"> <strong>ACCESOS PARA NUEVO USUARIO</strong></p>
+    <table class="body-wrap fontFamily" style="width: 100%; background-color: #f6f6f6; margin: 0;" bgcolor="#f6f6f6">
+        <tbody>
+            <tr class="fontFamily" style="margin: 0;">
+                <td class="fontFamily" style="vertical-align: top; margin: 0;" valign="top"></td>
+                <td class="container fontFamily" width="600" style="vertical-align: top; display: block !important; max-width: 600px !important; clear: both !important; margin: 0 auto;"
+                    valign="top">
+                    <div class="content fontFamily" style="max-width: 600px; display: block; margin: 0 auto; padding: 20px;">
+                        <table class="main fontFamily" width="100%" cellpadding="0" cellspacing="0" style="border-radius: 3px; background-color: #fff; margin: 0; border: 1px solid #e9e9e9;" bgcolor="#fff">
+                            <tbody>
+                                <tr class="fontFamily" style="margin: 0;">
+                                    <td class="fontFamily" style="font-size:18px !important; vertical-align: top; color: #fff; font-weight: 500; text-align: center; border-radius: 3px 3px 0 0; background-color: #38414a; margin: 0; padding: 20px;"align="center" bgcolor="#71b6f9" valign="top">
+                                        <img id="imgempresa" alt="Dentalife" src="http://drive.google.com/uc?export=view&id=1alh0KAADNdpQS5r_hv80UqNh9Nrv2sXy" style="height: 80px">
+                                        <b style="margin-top: 10px;display: block;font-size:18px">Credenciales de acceso nuevo usuario.</b>
+                                    </td>
+                                </tr>
+                                <tr class="fontFamily" style="margin: 0;">
+                                    <td class="content-wrap fontFamily" style="vertical-align: top; margin: 0; padding: 20px;" valign="top">
+                                        <table class="fontFamily" width="100%" cellpadding="0" cellspacing="0" style="margin: 0;">
+                                            <tbody>
+                                                <tr class="fontFamily" style="margin: 0;">
+                                                    <td class="content-block fontFamily" style="vertical-align: top; margin: 0; padding: 0 0 20px; font-size:16px" valign="top">
+                                                        <b>Bienvenid@ </b> {{$user->name}} {{$user->ap_paterno}}!!!
+                                                    </td>
+                                                </tr>
+                                                <tr class="fontFamily" style="margin: 0;">
+                                                    <td class="content-block" style="vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
+                                                        Ahora puede iniciar una sesión en nuestro sistema usando el siguiente nombre de usuario y la siguiente contraseña:
+                                                    </td>
+                                                </tr>
+                                                <tr class="fontFamily" style="margin: 0;">
+                                                    <td class="content-block fontFamily" style="vertical-align: top; margin: 0; padding: 0 0 20px; font-size:14px" valign="top">
+                                                        <b>Nombre de usuario: </b> {{$user->username}}
+                                                    </td>
+                                                </tr>
+                                                <tr class="fontFamily" style="margin: 0;">
+                                                    <td class="content-block fontFamily" style="vertical-align: top; margin: 0; padding: 0 0 20px; font-size:14px" valign="top">
+                                                        <b>Contraseña: </b> {{$pass}}
+                                                    </td>
+                                                </tr>
+                                                <tr class="fontFamily" style="margin: 0;">
+                                                    <td class="content-block" style="vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
+                                                        Puede ingresar haciendo clic en el botón de abajo
+                                                    </td>
+                                                </tr>
+                                                <tr class="fontFamily" style="margin: 0;">
+                                                    <td class="content-block fontFamily" style="vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
+                                                        <center>
+                                                            <a href="http://127.0.0.1:8000/login" class="fontFamily buttonLink" target="_blank">
+                                                                Ir a Dentalife
+                                                            </a>
+                                                        </center>
+                                                    </td>
+                                                </tr>
+                                                <tr class="fontFamily" style="margin: 0;">
+                                                    <td class="content-block fontFamily" style="vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
+                                                        <i>Se recomienda cambiar de contraseña desde su <b>Perfil de usuario</b></i>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="footer fontFamily" style="width: 100%; clear: both; color: #999; margin: 0; padding: 20px;">
+                            <table width="100%" class="fontFamily" style="margin: 0;">
+                                <tbody>
+                                    <tr class="fontFamily" style="margin: 0;">
+                                        <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 12px; vertical-align: top; color: #999; text-align: center; margin: 0; padding: 0 0 10px;" align="center" valign="top">
+                                            <b>Notificación enviada por: </b> {{userFullname(userId())}}
+                                        </td>
+                                    </tr>
+                                    <tr class="fontFamily" style="margin: 0;">
+                                        <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 12px; vertical-align: top; color: #999; text-align: center; margin: 0; padding: 0 0 10px;" align="center" valign="top">
+                                            <b>Fecha de notificación: </b> {{date("d/m/Y H:i")}}
+                                        </td>
+                                    </tr>
+                                    <tr class="fontFamily" style="margin: 0;">
+                                        <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 12px; vertical-align: top; color: #999; text-align: center; margin: 0; padding: 0 0 10px;" align="center" valign="top">
+                                            <a href="http://127.0.0.1:8000/" class="urlClass" target="_blank">
+                                                <b>www.dentalife.com.bo</b>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </td>
-            </tr>
-            <tr>
-                <td style="width: 600px; max-width: 100%; padding: 10px 30px; word-break: break-word; line-height: 1.4;">
-                    <p style="text-align:center; font-size:18px; margin-bottom:20px">
-                        <b>Bienvenido </b> <br> {{$user->name}} {{$user->ap_paterno}}
-                    </p>
-                    <p style="margin-bottom:20px">
-                        Ahora puede iniciar una sesión en nuestro sistema usando el siguiente nombre de usuario y la siguiente contraseña:
-                    </p>
-                    <p style="margin-left:80px">
-                        <b>Nombre de Usuario: </b>{{$user->username}}
-                    </p>
-                    <p style="margin-left:80px;margin-bottom:20px">
-                        <b>Contraseña: </b> {{$pass}}
-                    </p>
-
-                    <p style="margin: 0;">
-                        Puede ingresar haciendo clic en este enlace o copiándolo y pegándolo en el navegador: <br>
-                        <center>
-                            <a href="{{ config('app.url') }}" target="_blank" style="color: #006699; font-size: 15px;" style="text-align:center;font-size:16px">admin.cmmshere.com/</a>
-                        </center> <br>
-                        <i> <b>DEBE</b> cambiar su contraseña cuando ingrese al Sistema</i>
-                    </p>
-
-                </td>
+                <td class="fontFamily" style="vertical-align: top; margin: 0;" valign="top"></td>
             </tr>
         </tbody>
-        <tfoot style="background-color: #eff3f9; font-size: 12px; width: 600px; max-width: 100%; text-align: center;">
-            <tr>
-                <td style="border-bottom: solid 1px #c9d7df; padding: 10px 30px;">
-                        <p style="margin: 0; font-weight: bold;">NOTIFICACIÓN ENVIADA POR: <span>{{userFullname(userId())}}</span></p>
-                        <p style="margin: 0; font-weight: bold;">FECHA DE NOTIFICACIÓN: <span>{{date("d/m/Y H:i")}}</span> </p>
-                </td>
-            </tr>
-            <tr>
-                <td style="padding: 10px 30px;">
-                    <p style="margin: 0;">
-                        <a href="http://127.0.0.1:8000/" target="_blank" style="color: #006699; font-size: 13px;">www.dentalife.com.bo</a>
-                    </p>
-                </td>
-            </tr>
-        </tfoot>
     </table>
 </body>
 </html>

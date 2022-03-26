@@ -6,6 +6,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Gate;
+use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Traits\RefreshesPermissionCache;
 
 class User extends Authenticatable
 {
@@ -44,4 +46,9 @@ class User extends Authenticatable
         // else
         //     return userFullName($this->id);
     }
+
+    use Notifiable;
+    /* utilizando los roles*/
+    use HasRoles;
+    use RefreshesPermissionCache;
 }

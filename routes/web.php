@@ -70,3 +70,9 @@ Route::post('/roles_delete/{id}','RoleController@destroy')->name('roles.destroy'
 Route::get('/usuarios', 'UserController@index')->name('user.index');
 // Ruta para mostrar los datos generales de un usuario
 Route::get('/usuarios/{user}','UserController@show')->name('users.show');
+// Ruta para ir a la vista donde se creara el usuario
+Route::get('/usuarios_create','UserController@create')->name('users.create');
+// Ruta para guardar usuario nuevo
+Route::post('/usuarios_store','UserController@store')->name('users.store');
+// Ruta para validar nombre de usuario
+Route::post('/validar_user','UserController@validarUsername')->name('users.validar');

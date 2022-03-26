@@ -61,7 +61,7 @@
     {{-- Botones para añadir nuevo registro --}}
     <div class="col-auto ms-auto d-print-none">
         <div class="btn-list">
-            <a href="/users/create" title="Nuevo usuario">
+            <a href="/usuarios_create" title="Nuevo usuario">
                 <button class="btn btn btn-primary btn-pill" >
                     <i class="fa fa-plus fa-md" ></i> &nbsp;
                     <span class="d-none d-sm-inline-block">
