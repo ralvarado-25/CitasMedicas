@@ -29,7 +29,7 @@ class NuevoUsuario extends Mailable
      */
     public function build()
     {
-        return $this->view('adminTemplate.mails.nuevousuario')->subject("Credenciales Acceso a Nuevo Usuario");
+        return $this->view('adminTemplate.mails.nuevousuario')->subject("Bienvenido a Dentalife");
     }
 }
 
