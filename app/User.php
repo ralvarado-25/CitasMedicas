@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Traits\RefreshesPermissionCache;
+use Spatie\Permission\Models\Role;
 
 class User extends Authenticatable
 {
@@ -45,6 +46,10 @@ class User extends Authenticatable
             return '<a href="/usuarios/'.code($this->id).'" target="_blank">'.userFullName($this->id).'</a>';
         // else
         //     return userFullName($this->id);
+    }
+
+    public function rolesUsers(){
+        return $this->belongsTo(Role::class, 'role_id');
     }
 
     use Notifiable;

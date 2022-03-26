@@ -170,6 +170,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Torann\Hashids\HashidsServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -233,6 +234,7 @@ return [
         'Hashids' => Torann\Hashids\Facade\Hashids::class,
         'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

@@ -64,7 +64,7 @@ Route::post('/roles_delete/{id}','RoleController@destroy')->name('roles.destroy'
 
 
 // ========================================================================================
-//                                    RUTAS DE ROLES
+//                                    RUTAS DE USUARIOS
 // ========================================================================================
 // Ruta para el index (vista principal y listado)
 Route::get('/usuarios', 'UserController@index')->name('user.index');
@@ -76,3 +76,11 @@ Route::get('/usuarios_create','UserController@create')->name('users.create');
 Route::post('/usuarios_store','UserController@store')->name('users.store');
 // Ruta para validar nombre de usuario
 Route::post('/validar_user','UserController@validarUsername')->name('users.validar');
+// Ruta para ir a la vista donde se editara el usuario
+Route::get('/usuarios/edit/{user}','UserController@edit')->name('users.edit');
+// Funcion para editar el usuario
+Route::post('/usuarios_update/{user}','UserController@update')->name('users.update');
+// CAMBIAR IMAGEN DE AVATAR
+Route::post('/useravatar', 'UserController@uploadAvatarImagen')->name('users.avatar');
+
+Route::put('/users/{user}/rol','UserController@updaterol')->name('updaterol');

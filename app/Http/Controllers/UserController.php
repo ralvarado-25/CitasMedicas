@@ -10,7 +10,13 @@ use Session;
 use PDF;
 use Mail;
 use DB;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image as InterventionImage;
+use Illuminate\Http\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
+use Illuminate\Support\Facades\Storage;
+
 class UserController extends Controller
 {
     public function index (Request $request){
@@ -169,5 +175,196 @@ class UserController extends Controller
 
             return response()->json(array('msg'=> $msg), 200);
         }
+    }
+
+    /**
+     * Muestra el formulario para editar un usuario.
+     */
+    public function edit($id){
+        $user=User::findOrFail(decode($id));
+        if($user->active == '1'){
+            $roles = Role::where('active','1')->get();
+            Session::put('item', '2.');
+            return view('adminTemplate.users.edit',compact('user','roles'));
+        }
+        abort(404);
+    }
+
+        /**
+     * Actualiza los datos de un usuario.
+     *
+     * @param  \Illuminate\Http\UserFormularioRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id){
+        $user = User::where('id',decode($id))->first();
+        // Validacion por request
+        $this->validateUpdateUser($request, $user);
+
+        DB::beginTransaction();
+        try {
+            // PRINCIPALES
+            $user->username=$request->username;
+            $user->name=$request->name;
+            $user->ap_paterno=$request->ap_paterno;
+            $user->ap_materno=$request->ap_materno;
+            $user->cargo=$request->cargo;
+            $user->email=$request->email;
+            $user->celular=$request->celular;
+            $user->fecha_nacimiento = ($request->fecha_nac != null) ? convFechaDT($request->fecha_nac) : null;
+            $user->nro_doc = $request->nro_doc;
+
+            // PASSWORD
+            if($request->auxpass == 1 && $request->password_first != null && $request->new_password != null ){
+                $user->password = bcrypt($request->new_password);
+                toastr()->success('Modificada con éxito.','Contraseña '.userFullName($user->id), ['positionClass' => 'toast-bottom-right']);
+            }
+            $user->update();
+            toastr()->info('Modificado con éxito.','Usuario '.userFullName($user->id), ['positionClass' => 'toast-bottom-right']);
+            DB::commit();
+            return  \Response::json(['success' => '1']);
+        } //termina el try
+        catch (\Exception $e) {
+            DB::rollback();
+            return $e->getMessage();
+        }
+    }
+
+    public function uploadAvatarImagen(Request $request){
+        $image_parts = explode(";base64,", $request->image);
+        $file = base64_decode($image_parts[1]);
+        $tmpFilePath = sys_get_temp_dir() . '/' . Str::uuid()->toString();
+        file_put_contents($tmpFilePath, $file);
+        $tmpFile = new File($tmpFilePath);
+        $file = new UploadedFile(
+            $tmpFile->getPathname(),
+            $tmpFile->getFilename(),
+            $tmpFile->getMimeType(),
+            0,true // Mark it as test, since the file isn't from real HTTP POST.
+        );
+        $user = User::where('id',decode($request->userid))->first();
+        if(isset($user->avatar)){
+            $ruta='public/general/avatar/'.$user->avatar;
+            $ruta_thum='public/general/avatar/thumbnail/'.$user->avatar;
+            // Si la imagen es la imagen por defecto no se la eliminara
+            if ($user->avatar!='avatar0.png' && Storage::exists($ruta))         Storage::delete($ruta);
+            if ($user->avatar!='avatar0.png' && Storage::exists($ruta_thum))    Storage::delete($ruta_thum);
+        }
+        $name = base64_encode($user->id).'_'.$this->generarCodigoImg(6).'.png';
+        $file->storeAs("public/general/avatar/", $name);
+        $file->storeAs("public/general/avatar/thumbnail/", $name);
+
+        InterventionImage::make($file)->resize(250,250, function ($constraint){
+            $constraint->aspectRatio();
+        })->save(storage_path().'/app/public/general/avatar/thumbnail/'.$name,90);
+
+        $user->avatar = $name;
+        $user->update();
+        toastr()->info('Modificado con éxito','Avatar ', ['positionClass' => 'toast-bottom-right']);
+        return response()->json(['success'=>'1']);
+    }
+
+    public function generarCodigoImg($longitud) {
+        $key = '';
+        $pattern = '1234567890abcdefghijklmnopqrstuvwxyz';
+        $max = strlen($pattern)-1;
+        for($i=0;$i < $longitud;$i++) $key .= $pattern[mt_rand(0,$max)];
+        return $key;
+    }
+
+        /**
+     * Actualiza el rol de un usuario.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updaterol(Request $request, $id){
+        $user=User::findOrFail($id);
+        DB::beginTransaction();
+        try {
+            $roleU = $request->get('roles');
+            $permiso = User::from('users as u')->join('roles as r','u.role_id','r.id')
+            ->select('u.role_id','r.id', 'r.name', 'r.guard_name')
+            ->where('r.active','1')->first();
+            if($permiso->id==$roleU){
+                $user->role_id=1;
+                $user->update();
+            }else{
+                $user->role_id=$roleU;
+                $user->update();
+            }
+            $user->syncRoles($roleU);
+            $per = User::join('model_has_roles','model_has_roles.model_id','=','users.id')
+            ->join('role_has_permissions','role_has_permissions.role_id','=','model_has_roles.role_id')
+            ->join('permissions','permissions.id','=','role_has_permissions.permission_id')
+            ->select('role_has_permissions.permission_id')
+            ->where('users.id',$user->id)->get();
+            $x = $per->count();
+            /* SINCONIZANDO PERMISOS A USUARIOS */
+            $ar = [];
+            for($i=0; $i<$x ; $i++){
+                $y=$per[$i]->permission_id;
+                array_push($ar,$y);
+            }
+            $user->permissions()->sync($ar);
+            $user->removeRole($roleU);
+            DB::commit();
+            toastr()->info('Realizado con éxito.','Asignación de nuevo rol ', ['positionClass' => 'toast-bottom-right']);
+        }catch (\Exception $e) {
+            DB::rollback();
+            return $e->getMessage();
+        }
+        return back();
+    }
+
+    // ==============================================================================================================================
+    //                                                VALIDACIONES LARAVEL
+    // ==============================================================================================================================
+    public function validateUpdateUser($request, $user){
+        $messages = [
+            'name.required' => 'El campo Nombre(s) es obligatorio',
+            'name.min' => 'El campo Nombre(s) debe tener como mínimo 2 caracteres',
+            'name.max' => 'El campo Nombre(s) debe tener como máximo 40 caracteres',
+            'ap_paterno.required' => 'El campo Apellido Paterno es obligatorio',
+            'ap_paterno.min' => 'El campo Apellido Paterno debe tener como mínimo 2 caracteres',
+            'ap_paterno.max' => 'El campo Apellido Paterno debe tener como máximo 50 caracteres',
+            'ap_materno.min' => 'El campo Apellido Materno debe tener como mínimo 2 caracteres',
+            'ap_materno.max' => 'El campo Apellido Materno debe tener como máximo 50 caracteres',
+            'cargo.min' => 'El campo Cargo debe tener como mínimo 2 caracteres',
+            'cargo.max' => 'El campo Cargo debe tener como máximo 100 caracteres',
+            'nro_doc.required' => 'El campo Nº de documento es obligatorio.',
+            'fecha_nac.date_format'  => 'El campo Fecha de Nacimiento no corresponde a una fecha válida',
+
+            // MENSAJES PASSWORD
+            'password_first.min'  => 'El campo Contraseña Nueva debe contener al menos 8 caracteres.',
+            'password_first.required'  => 'El campo Contraseña Nueva" es obligatorio',
+            'password_first.regex'  => 'El campo Contraseña Nueva" NO CUMPLE CON LOS REQUERIMIENTOS',
+            'new_password.min'  => 'El campo Confirmar Contraseña Nueva debe contener al menos 8 caracteres.',
+            'new_password.required'  => 'El campo Confirmar Contraseña Nueva es obligatorio',
+            'new_password.regex'  => 'El campo Confirmar Contraseña Nueva NO CUMPLE CON LOS REQUERIMIENTOS',
+            'new_password.same' => 'Los campos "Contraseña nueva" y "Confirmar contraseña nueva" deben coincidir.'
+        ];
+
+        $validateArray = [
+            'username' => 'bail|required|max:45|min:5|regex:/^[A-Za-z0-9ñáéíóúÁÉÍÓÚÑ@#$%^&*+:;,. -]+$/|unique:users,username,'.$user->id,
+            'name' => 'bail|required|max:40|min:2',
+            'ap_paterno' => 'bail|required|max:50|min:2',
+            'ap_materno' => 'bail|nullable|max:50|min:2',
+            'cargo'=>'min:2|max:100',
+            'email' => 'bail|required|email:filter',
+            'celular'=>'min:3|max:20',
+            'nro_doc' => 'required',
+        ];
+
+        $validatePassword = [
+            'password_first' => 'bail|required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
+            'new_password' => 'bail|required|min:8|same:password_first|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'
+        ];
+        if($request->auxpass == 1 ){
+            $validateArray = array_merge($validateArray,$validatePassword);
+        }
+        return $request->validate($validateArray,$messages);
     }
 }
