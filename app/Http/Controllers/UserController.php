@@ -421,6 +421,53 @@ class UserController extends Controller
         return back();
     }
 
+        /**
+     * Carga el formulario para eliminar los datos de la asignación del grupo de correos a un módulo
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function modalDelete($id){
+        $users = User::findOrFail(decode($id));
+        return view('adminTemplate.users.modalDelete', compact('users'));
+    }
+
+    /**
+     * Elimina un usuario dado.
+     *
+     * @param  \App\User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request, $id){
+        $user = User::findOrFail(decode($id));
+        $messages = [
+            'userborrar.required' => 'El campo es obligatorio',
+            'userborrar.in' => 'El campo no coincide con <b>'.$user->username.'</b>',
+        ];
+        $validateRetiro = [
+            'userborrar' => 'bail|required|in:'.$user->username,
+        ];
+        $request->validate($validateRetiro,$messages);
+
+        if($user->id != userId()){
+            if(isset($user->avatar)){
+                $ruta = 'public/general/avatar/'.$user->avatar;
+                $ruta_thum = 'public/general/avatar/thumbnail/'.$user->avatar;
+                if ($user->avatar!='avatar0.png' && Storage::exists($ruta))         Storage::delete($ruta);
+                if ($user->avatar!='avatar0.png' && Storage::exists($ruta_thum))    Storage::delete($ruta_thum);
+            }
+            if(isset($user->firma)){
+                $ruta = "public/empresas_archivos/".miEmpresa()->cod.'/firmas/'.$user->firma;
+                if (Storage::exists($ruta)) Storage::delete($ruta);
+            }
+            $user->active = 2;
+            $user->update();
+            $user->permissions()->sync([]);
+            toastr()->error('Eliminado correctamente.','Usuario '.userFullName($user->id), ['positionClass' => 'toast-bottom-right']);
+        }
+        return  \Response::json(['success' => '1']);
+    }
+
 
     // ==============================================================================================================================
     //                                                VALIDACIONES LARAVEL

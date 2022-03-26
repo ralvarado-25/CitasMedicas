@@ -90,6 +90,10 @@ Route::middleware(['auth'])->group(function(){
     // CAMBIAR ESTADO DE USUARIOS
     Route::get('/users/modalCambEstado/{id}', 'UserController@modalCambioEstado')->name('users.modalDelete');
     Route::post('/users/cambiarestado/{id}','UserController@cambiarestado')->name('users.cambiarestado');
+
+    // ELIMINAR USUARIOS
+    Route::post('/users_delete/{user}','UserController@destroy')->name('users.destroy');
+    Route::get('/users/modalDelete/{id}', 'UserController@modalDelete')->name('users.modalDelete');
 });
 
 
