@@ -20,7 +20,7 @@ class Citas extends Model
     }
 
     public function getEstado($estilos){
-        switch ($this->state) {
+        switch ($this->estado) {
             case '0':
                 $val = "Pendiente";
                 if( 1 == 1 )
