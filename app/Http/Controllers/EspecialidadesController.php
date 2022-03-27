@@ -3,31 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Especialidades;
-use App\Mail\NuevoUsuario;
 use Illuminate\Http\Request;
-use App\User;
 use Session;
-use PDF;
-use Mail;
-
+use Illuminate\Support\Facades\DB;
+use Intervention\Image\Facades\Image as InterventionImage;
 class EspecialidadesController extends Controller
 {
     public function index (Request $request){
-        $filtro = 'ejemplo de variable';
+        $especialidades = Especialidades::where('activo',1)->get();
         Session::put('item', '4.');
-        return view("adminTemplate.especialidades.index", compact('filtro'));
+        return view("adminTemplate.especialidades.index", compact('especialidades'));
     }
-
-    /**
-     * FUncion para guardar registro
-     */
-    public function store(Request $request){
-
-
-        toastr()->success('Registrado con éxito.','Ejemplo ', ['positionClass' => 'toast-bottom-right']);
-        return back();
-    }
-
 
     /**
      * FUncion para actualizar registro

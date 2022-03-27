@@ -124,7 +124,7 @@
                 <li class="nav-item {!!strstr($item,'.',true)=='4'?'active':'';!!}">
                     <a class="dropdown-item" href="/especialidades" >
                         <span class="nav-link-icon  d-lg-inline-block">
-                            <img src="{{asset('icons/tooth.png')}}" width="20" height="20" style="{!!strstr($item,'.',true)=='4' ? 'filter: invert(57%) sepia(50%) saturate(468%) hue-rotate(134deg) brightness(101%) contrast(97%);' : 'filter: brightness(0) invert(1);'; !!}>
+                            <img src="{{asset('icons/tooth.png')}}" width="20" height="20" style="{!!strstr($item,'.',true)=='4' ? 'filter: invert(57%) sepia(50%) saturate(468%) hue-rotate(134deg) brightness(101%) contrast(97%);' : 'filter: brightness(0) invert(1);'; !!}">
                         </span>
                         <span class="nav-link-title">
                             Especialidades &ensp;
