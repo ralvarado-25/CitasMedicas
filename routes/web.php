@@ -110,6 +110,22 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/especialidad/modalCambEstado/{id}', 'EspecialidadesController@modalCambioEstado')->name('especialidades.modalEstado');
     Route::post('/especialidad/state/{id}/', 'EspecialidadesController@cambiarestado')->name('especialidades.changestatus');
+
+    // ========================================================================================
+    //                                    RUTAS DE CITAS
+    // ========================================================================================
+    // Ruta para el index (vista principal y listado)
+    Route::get('/citas', 'CitasController@index')->name('citas.index');
+    // Ruta para guardar especialidad nueva
+    Route::post('/cita_store','CitasController@store')->name('especialidades.store');
+
+    Route::get('/cita/editmodal/{id}', 'CitasController@modalEdit')->name('citas.editmodal');
+    Route::post('/cita/update/{id}', 'CitasController@update')->name('citas.update');
+    Route::get('/cita/deletemodal/{id}', 'CitasController@modalDelete')->name('citas.deletemodal');
+    Route::delete('/cita/destroy/{id}', 'CitasController@destroy')->name('citas.destroy');
+
+    Route::get('/cita/modalCambEstado/{id}', 'CitasController@modalCambioEstado')->name('citas.modalEstado');
+    Route::post('/cita/state/{id}/', 'CitasController@cambiarestado')->name('citas.changestatus');
 });
 
 
