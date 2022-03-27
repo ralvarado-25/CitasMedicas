@@ -26,6 +26,18 @@
         }
     </script>
     <script>
+        function iconValidation(cond, object){
+            if(cond){
+                object.removeClass("glyphicon-remove");
+                object.addClass("glyphicon-ok");
+                object.css("color","#00A41E");
+            }else{
+                object.removeClass("glyphicon-ok");
+                object.addClass("glyphicon-remove");
+                object.css("color","#FF0004");
+            }
+        }
+
         $(document).ready(function () {
             // Darle estilos a los select2 segun el template usado
             $(".select2-selection").addClass('form-select2').css('border-color','#ccc');

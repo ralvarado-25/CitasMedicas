@@ -313,18 +313,6 @@
         $(".btn-file").addClass('w-100');
     });
 
-    function iconValidation(cond, object){
-        if(cond){
-            object.removeClass("glyphicon-remove");
-            object.addClass("glyphicon-ok");
-            object.css("color","#00A41E");
-        }else{
-            object.removeClass("glyphicon-ok");
-            object.addClass("glyphicon-remove");
-            object.css("color","#FF0004");
-        }
-    }
-
     $("#password1,#password2").keyup(function(){
         var ucase = new RegExp("[A-Z]+");
         var lcase = new RegExp("[a-z]+");
