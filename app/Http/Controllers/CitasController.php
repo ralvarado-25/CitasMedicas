@@ -193,6 +193,50 @@ class CitasController extends Controller
      * FUncion para exportar PDF
      */
     public function exportPdf(Request $request){
+        // 'selectFecha','fechainicio','fechafinal','pacientePDF','especialidadPDF'
+
+
+        $messages = [
+            'selectFecha.required' => 'Debe escoger una opción valida',
+            'pacientePDF.required' => 'Debe escoger una opción válida',
+            'especialidadPDF.required' => 'Debe escoger una opción válida',
+            'fechainicio.date_format' => 'El campo fecha de inicio debe ser de formato dd/mm/YYYY',
+            'fechainicio.required' => 'El campo fecha de inicio es obligatoria',
+            'fechafinal.date_format' => 'El campo fecha final debe ser de formato dd/mm/YYYY',
+            'fechafinal.required' => 'El campo fecha final es obligatoria',
+            'fechafinal.after' => 'El campo fecha final debe ser posterior a fecha de inicio',
+        ];
+
+        $validateArray = [
+            'selectFecha' => 'required',
+            'pacientePDF' => 'required',
+            'especialidadPDF' => 'required',
+        ];
+        $validateFecha = [
+            'fechainicio' => 'required|date_format:d/m/Y',
+            'fechafinal' => 'required|date_format:d/m/Y|after:fechainicio',
+        ];
+
+
+        if($request->selectFecha == 'r' ) $validateArray = array_merge($validateArray,$validateFecha);
+        $request->validate($validateArray, $messages);
+
+        $inicio = convFechaDT($request->fechainicio).' 00:00:00';
+        $final = convFechaDT($request->fechafinal).' 23:59:59';
+        $citas = Citas::
+        Paciente($request->pacientePDF)
+        ->Especialidad($request->especialidadPDF)
+        ->RangeDate($inicio, $final, $request->selectFecha)
+        ->orderBy('cod','desc')->get();
+        // Cargar la vista que sera mostrada en el pdf
+        $pdf = PDF::loadView("adminTemplate.citas.pdf", compact('citas'));
+
+        // Geberar el PDF
+        return $pdf->setOption('margin-bottom',8)->setOption('margin-top',7)
+        ->setPaper('A4', 'portrait') // portrait
+        ->setOption('footer-right', 'Pagina [page] de [toPage] ')
+        ->setOption('footer-left', 'Exportado el '. date('d/m/Y') .' a la(s) '.date('H:i'))
+        ->stream('PDF_Dentalife.pdf');
 
     }
 
