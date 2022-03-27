@@ -71,7 +71,7 @@
                             <td class="font-weight-bold">{!!$cita->cod!!}</td>
                             <td>{{userFullName($cita->user_id)}}</td>
                             <td>{{$cita->especialidades->nombre}}</td>
-                            <td>{{$cita->getFechaHora()}} Horas</td>
+                            <td>{!!$cita->getFechaHora()!!}</td>
                             <td class="just">{!! $cita->descripcion !!}</td>
                             <td>{!!$cita->getEstado(1)!!}</td>
                             <td>

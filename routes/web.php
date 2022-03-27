@@ -117,7 +117,7 @@ Route::middleware(['auth'])->group(function(){
     // Ruta para el index (vista principal y listado)
     Route::get('/citas', 'CitasController@index')->name('citas.index');
     // Ruta para guardar especialidad nueva
-    Route::post('/cita_store','CitasController@store')->name('especialidades.store');
+    Route::post('/cita_store','CitasController@store')->name('citas.store');
 
     Route::get('/cita/editmodal/{id}', 'CitasController@modalEdit')->name('citas.editmodal');
     Route::post('/cita/update/{id}', 'CitasController@update')->name('citas.update');

@@ -9,7 +9,7 @@
                 <button type="button" class="btn-close text-primary" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                {!! Form::open( array('route' =>'especialidades.store','method'=>'POST','autocomplete'=>'off','files'=>'true','id'=>'formCreateEspecialidades', 'onsubmit'=>'btnSubmit.disabled = true; return true;'))!!}
+                {!! Form::open( array('route' =>'citas.store','method'=>'POST','autocomplete'=>'off','files'=>'true','id'=>'formCreateCitas', 'onsubmit'=>'btnSubmit.disabled = true; return true;'))!!}
                 <div class="row">
                     {!! datosRegistro('create') !!}
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -24,7 +24,6 @@
                             <span id="paciente-error" class="text-red"></span>
                         </div>
                     </div>
-
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="form-group">
                             <label id="especialidad--label">* Especialidad</label> <br>
@@ -45,7 +44,7 @@
                                 <span class="input-icon-addon">
                                     <i id="iconForm" class="far fa-calendar-alt"></i>
                                 </span>
-                                <input class="form-control input-incon datepicker" name="fecha" value="" placeholder="dd/mm/YYYY">
+                                <input class="form-control input-incon datepicker" id="inputFecha" name="fecha" value="" placeholder="dd/mm/YYYY">
                             </div>
                             <span id="fecha-error" class="text-red"></span>
                         </div>
@@ -57,10 +56,17 @@
                                 <span class="input-icon-addon">
                                     <i id="iconForm" class="far fa-clock"></i>
                                 </span>
-                                <input class="form-control input-incon timepicker" name="hora" value="" placeholder="dd/mm/YYYY">
+                                <input class="form-control input-incon timepicker" id="inputHora" name="hora" value="" placeholder="HH:mm">
                             </div>
                             <span id="hora-error" class="text-red"></span>
                         </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <input class="form-control input-incon" name="fechahora" value="" id="inputFechaHora" style="display:none">
+                        <center>
+                            <b id="fechahora-error" class="text-red"></b>
+                        </center>
                     </div>
 
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -84,8 +90,25 @@
 
 
 @push('scripts')
-    {{-- <script>
-        var campos = ['nombre','duracion','descripcion','fileEspecialidades'];
-        ValidateAjax("formCreateEspecialidades",campos,"btnSubmit","{{route('especialidades.store')}}","POST","/especialidades");
-    </script> --}}
+    <script>
+        $("#inputFecha").change(function() {
+            var fecha = $(this).val();
+            var hora = $("#inputHora").val();
+            hora = hora.length == '4' ? '0'+hora : hora;
+            var fechahora = fecha+" "+hora;
+            $("#inputFechaHora").val(fechahora);
+        });
+        $("#inputHora").change(function() {
+            var hora = $(this).val();
+            hora = hora.length == '4' ? '0'+hora : hora;
+            var fecha = $("#inputFecha").val();
+            var fechahora = fecha+" "+hora;
+            $("#inputFechaHora").val(fechahora);
+        });
+    </script>
+
+    <script>
+        var campos = ['paciente','especialidad','fecha','hora','fechahora','descripcion'];
+        ValidateAjax("formCreateCitas",campos,"btnSubmit","{{route('citas.store')}}","POST","/citas");
+    </script>
 @endpush
