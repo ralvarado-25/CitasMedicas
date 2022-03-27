@@ -85,7 +85,6 @@ class CitasController extends Controller
         return back();
     }
 
-
     public function modalEdit (Request $request, $id){
         $cita = Citas::findOrFail(decode($id));
         $especialidades = Especialidades::where('activo',1)->get();
@@ -136,11 +135,19 @@ class CitasController extends Controller
         return  \Response::json(['success' => '1']);
     }
 
+    public function modalDelete (Request $request, $id){
+        $cita = Citas::findOrFail(decode($id));
+        return view("adminTemplate.citas.modalDelete", compact('cita'));
+    }
     /**
      * FUncion para eliminar registro
      */
     public function destroy($id){
-        toastr()->error('Eliminado correctamente.','Ejemplo ', ['positionClass' => 'toast-bottom-right']);
+        $cita = Citas::findOrFail(decode($id));
+        if($cita->estado != '2'){
+            $cita->delete();
+            toastr()->error('Eliminada correctamente.','Cita '.$cita->cod, ['positionClass' => 'toast-bottom-right']);
+        }
         return back();
     }
 
