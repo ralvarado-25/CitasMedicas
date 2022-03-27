@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Session;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image as InterventionImage;
+use Illuminate\Support\Facades\Storage;
 class EspecialidadesController extends Controller
 {
     public function index (Request $request){
@@ -75,18 +76,72 @@ class EspecialidadesController extends Controller
             DB::rollback();
             return $e->getMessage();
         }
-
-        toastr()->success('Registrado con éxito.','Ejemplo ', ['positionClass' => 'toast-bottom-right']);
-        return back();
     }
 
+    /**
+     * Muestra ventana para la edicion de especialidad
+     */
+    public function modalEdit (Request $request, $id){
+        $esp = Especialidades::findOrFail(decode($id));
+        return view("adminTemplate.especialidades.modalEdit", compact('esp'));
+    }
     /**
      * FUncion para actualizar registro
      */
     public function update(Request $request, $id){
-        toastr()->info('Modificado con éxito.','Ejemplo ', ['positionClass' => 'toast-bottom-right']);
-        return back();
+        $messages = [
+            'nombreedit.required' => 'El campo nombre es obligatorio',
+            'duracionedit.required' => 'El campo duracion es obligatorio',
+            'duracionedit.numeric' => 'El campo duracion debe ser un número',
+            'descripcionedit.required' => 'El campo descripcion es obligatorio',
+            'descripcionedit.min' => 'El campo descripcion debe tener al menos 2 caracteres',
+            'descripcionedit.max' => 'El campo descripcion no debe tener mas de 255 caracteres',
+            'fileEspecialidadesEdit.mimes' => 'El archivo debe estar en algunos de los siguientes formatos:<br><p class="text-center"><b>gif, jpg, jpeg, png</b></p>',
+            'fileEspecialidadesEdit.max' => "El archivo a subir es muy grande. El tamaño máximo admitido es de 5 MB (5192 KB).",
+            'fileEspecialidadesEdit.required' => "Debe subir una imagen.",
+        ];
+        $validateArray = [
+            'nombreedit' => 'required',
+            'duracionedit' => 'required|numeric',
+            'descripcionedit' => 'required|min:2|max:255',
+        ];
+        $valFile = ['fileEspecialidadesEdit' => 'required|mimes:gif,jpg,jpeg,png|max:5192'];
+        if($request->cambioarchivo == 1 ) $validateArray = array_merge($validateArray,$valFile);
+        $request->validate($validateArray, $messages);
+
+        $especialidad = Especialidades::findOrFail(decode($id));
+
+        if ( $request->hasFile('fileEspecialidadesEdit') ){
+            $rutaFile = "public/especialidad/".$especialidad->imagen;
+            if (Storage::exists($rutaFile)) Storage::delete($rutaFile);
+
+            $archivo = $request->file('fileEspecialidadesEdit');
+            $nombreConExtension = $archivo->getClientOriginalName();
+            $nombreConExtension = delete_charspecial($nombreConExtension);
+            $especialidad->imagen = $especialidad->cod . '_' . strtolower($nombreConExtension);
+            $archivo->storeAs("public/especialidad/", $especialidad->imagen);
+            $size = getimagesize($archivo);
+            if($size[0]<=1024 && $size[1]<=1024){
+                InterventionImage::make($archivo)->resize(function ($constraint){
+                    $constraint->aspectRatio();
+                })->save(storage_path().'/app/public/especialidad/'.$especialidad->imagen, 90);
+            }else{
+                InterventionImage::make($archivo)->resize(1024,1024, function ($constraint){
+                    $constraint->aspectRatio();
+                })->save(storage_path().'/app/public/especialidad/'.$especialidad->imagen, 80);
+            }
+        }
+
+        $especialidad->nombre = $request->nombreedit;
+        $especialidad->descripcion = $request->descripcionedit;
+        $especialidad->duracion = $request->duracionedit;
+        $especialidad->update();
+
+        toastr()->info('Modificada con éxito.','Especialidad '.$especialidad->nombre, ['positionClass' => 'toast-bottom-right']);
+        return  \Response::json(['success' => '1']);
     }
+
+
 
     /**
      * FUncion para eliminar registro

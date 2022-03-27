@@ -102,6 +102,12 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/especialidad_store','EspecialidadesController@store')->name('especialidades.store');
     // Ruta para mostrar los datos generales de una especialidad
     Route::get('/especialidades/{id}','EspecialidadesController@show')->name('especialidades.show');
+
+    Route::get('/especialidad/editmodal/{id}', 'EspecialidadesController@modalEdit')->name('especialidades.editmodal');
+    Route::post('/especialidad/update/{id}', 'EspecialidadesController@update')->name('especialidades.update');
+    Route::get('/especialidad/deletemodal/{id}', 'EspecialidadesController@modalDelete')->name('especialidades.deletemodal');
+    Route::delete('/especialidad/destroy/{id}', 'EspecialidadesController@destroy')->name('especialidades.destroy');
+    Route::get('/especialidad/state/{id}/{estado}', 'EspecialidadesController@changeStatus')->name('especialidades.changestatus');
 });
 
 

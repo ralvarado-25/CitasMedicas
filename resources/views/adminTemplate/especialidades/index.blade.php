@@ -3,18 +3,7 @@
 
 {{-- Dentro de esta seccion ira todo el codigo CSS --}}
 @section('extracss')
-    <style>
-        table#tablaEspecialidad th{
-            font-size:12px;
-        }
-        table#tablaEspecialidad td{
-            font-size: 13px;
-        }
-        .just{
-            text-align: justify !important;
-            font-size: 11px !important;
-        }
-    </style>
+
     <link rel="stylesheet" href="{{asset('plugins/fileinput/css/fileinput.min.css')}}" media="all" type="text/css" />
 @endsection
 {{-- Cabecera de la pagina --}}
@@ -85,7 +74,7 @@
                             <td>{{$esp->duracion}} Horas</td>
                             <td>{!!$esp->getEstado()!!}</td>
                             <td>
-                                <a href="/usuarios/edit/{{code($esp->id)}}" title="Editar" data-toggle="tooltip">
+                                <a rel="modalEdit" style="cursor:pointer" href="/especialidad/editmodal/{{code($esp->id)}}" title="Editar" data-toggle="tooltip">
                                     <svg class="icon text-blue iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" /><path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" /><line x1="16" y1="5" x2="19" y2="8" /></svg>
                                 </a>
 
@@ -109,13 +98,6 @@
         </div>
     </div>
 
-    {{-- $especialidad->user_id = userId();
-    $especialidad->cod = $cod;
-    $especialidad->nombre = $request->nombre;
-    $especialidad->descripcion = $request->descripcion;
-    $especialidad->duracion = $request->duracion;
-    $especialidad->activo = "1"; --}}
-
     @include('adminTemplate.especialidades.modalCreate')
 
     <div class="modal modalPrimary modal-info fade modal-slide-in-right" aria-hidden="true" role="dialog" id="modalShow" data-backdrop="static" data-keyboard="false">
@@ -125,11 +107,26 @@
         </div>
     </div>
 
+    {{-- Modal Editar --}}
+    <div class="modal modalPrimary fade modal-slide-in-right" aria-hidden="true" role="dialog"  id="modalEdit" data-backdrop="static">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar especialidad</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 @section('scripts')
 <script src="{{asset('/plugins/fileinput/js/fileinput.min.js')}}"></script>
 <script>
         modalAjax("modalShow","modalShow","modal-content");
+        modalAjax("modalEdit","modalEdit","modal-body");
         var campos = ['nombre','descripcion'];
         $( "#addEspecialidad" ).click(function() {
             $('#modalCrearEspecialidad').modal('show');
