@@ -87,7 +87,7 @@
                                         <svg class="icon text-green iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h10v6a3 3 0 0 1 -3 3h-4a3 3 0 0 1 -3 -3v-6" /><line x1="9" y1="3" x2="9" y2="7" /><line x1="15" y1="3" x2="15" y2="7" /><path d="M12 16v2a2 2 0 0 0 2 2h3" /></svg>
                                     </a>
                                 @endif
-                                <a rel="modalEliminar" style="cursor:pointer" href="/users/modalDelete/{{code($esp->id)}}" data-toggle="tooltip" data-placement="top" title="Eliminar" data-toggle="tooltip">
+                                <a rel="modalDelete" style="cursor:pointer" href="/especialidad/deletemodal/{{code($esp->id)}}" data-toggle="tooltip" data-placement="top" title="Eliminar" data-toggle="tooltip">
                                     <svg class="icon text-red iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="4" y1="7" x2="20" y2="7" /><line x1="10" y1="11" x2="10" y2="17" /><line x1="14" y1="11" x2="14" y2="17" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
                                 </a>
                             </td>
@@ -121,12 +121,20 @@
         </div>
     </div>
 
+    {{-- Modal Eliminar --}}
+    <div class="modal modal-danger fade modal-slide-in-right" aria-hidden="true" role="dialog"  id="modalDelete" data-backdrop="static">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
 @endsection
 @section('scripts')
 <script src="{{asset('/plugins/fileinput/js/fileinput.min.js')}}"></script>
 <script>
         modalAjax("modalShow","modalShow","modal-content");
         modalAjax("modalEdit","modalEdit","modal-body");
+        modalAjax("modalDelete","modalDelete","modal-content");
         var campos = ['nombre','descripcion'];
         $( "#addEspecialidad" ).click(function() {
             $('#modalCrearEspecialidad').modal('show');

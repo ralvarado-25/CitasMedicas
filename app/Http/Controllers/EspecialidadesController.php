@@ -141,13 +141,22 @@ class EspecialidadesController extends Controller
         return  \Response::json(['success' => '1']);
     }
 
+    /**
+     * Muestra ventana para la edicion de especialidad
+     */
+    public function modalDelete (Request $request, $id){
+        $esp = Especialidades::findOrFail(decode($id));
+        return view("adminTemplate.especialidades.modalDelete", compact('esp'));
+    }
 
 
     /**
      * FUncion para eliminar registro
      */
     public function destroy($id){
-        toastr()->error('Eliminado correctamente.','Ejemplo ', ['positionClass' => 'toast-bottom-right']);
+        $esp = Especialidades::findOrFail(decode($id));
+        $esp->delete();
+        toastr()->error('Eliminado correctamente.','Especialidad '.$esp->nombre, ['positionClass' => 'toast-bottom-right']);
         return back();
     }
 
