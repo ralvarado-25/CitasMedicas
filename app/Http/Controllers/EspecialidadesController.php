@@ -16,6 +16,14 @@ class EspecialidadesController extends Controller
     }
 
     /**
+     * Muestra ventana con los detalles de la especialidad
+     */
+    public function show(Request $request, $id){
+        $esp = Especialidades::findOrFail(decode($id));
+        return view("adminTemplate.especialidades.modalShow", compact('esp'));
+    }
+
+    /**
      * FUncion para actualizar registro
      */
     public function update(Request $request, $id){

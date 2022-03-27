@@ -78,7 +78,7 @@
                 <tbody>
                     @foreach($especialidades as $esp)
                         <tr>
-                            <td>{{$esp->cod}}</td>
+                            <td class="font-weight-bold">{!!$esp->getCod()!!}</td>
                             <td>{{userFullName($esp->user_id)}}</td>
                             <td>{{$esp->nombre}}</td>
                             <td class="just">{!! $esp->descripcion !!}</td>
@@ -118,10 +118,18 @@
 
     @include('adminTemplate.especialidades.modalCreate')
 
+    <div class="modal modalPrimary modal-info fade modal-slide-in-right" aria-hidden="true" role="dialog" id="modalShow" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+
 @endsection
 @section('scripts')
 <script src="{{asset('/plugins/fileinput/js/fileinput.min.js')}}"></script>
 <script>
+        modalAjax("modalShow","modalShow","modal-content");
         var campos = ['nombre','descripcion'];
         $( "#addEspecialidad" ).click(function() {
             $('#modalCrearEspecialidad').modal('show');

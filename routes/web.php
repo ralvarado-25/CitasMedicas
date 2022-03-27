@@ -38,7 +38,6 @@ Route::middleware(['auth'])->group(function(){
 
     // Ruta para el index (vista principal y listado)
     Route::get('/citas', 'CitasController@index')->name('citas.index');
-    Route::get('/especialidades', 'EspecialidadesController@index')->name('especialidades.index');
 
     // ========================================================================================
     //                                    RUTAS DE ROLES
@@ -94,6 +93,15 @@ Route::middleware(['auth'])->group(function(){
     // ELIMINAR USUARIOS
     Route::post('/users_delete/{user}','UserController@destroy')->name('users.destroy');
     Route::get('/users/modalDelete/{id}', 'UserController@modalDelete')->name('users.modalDelete');
+
+    // ========================================================================================
+    //                                    RUTAS DE ESPECIALIDADES
+    // ========================================================================================
+    Route::get('/especialidades', 'EspecialidadesController@index')->name('especialidades.index');
+    // Ruta para guardar especialidad nueva
+    Route::post('/especialidad_store','EspecialidadesController@store')->name('especialidades.store');
+    // Ruta para mostrar los datos generales de una especialidad
+    Route::get('/especialidades/{id}','EspecialidadesController@show')->name('especialidades.show');
 });
 
 
