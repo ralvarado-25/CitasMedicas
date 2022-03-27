@@ -25,7 +25,7 @@ class Citas extends Model
                 $val = "Pendiente";
                 if( 1 == 1 )
                     $fin =
-                    '<a rel="modalState" href="/programs/statemodal/'.code($this->id).'" class="text-yellow" title="Cambiar estado">
+                    '<a rel="modalState" href="/cita/modalCambEstado/'.code($this->id).'" class="text-yellow" title="Cambiar estado" data-toggle="tooltip">
                         <i class="fa fa-refresh fa-spin"></i><br> '.$val.'
                     </a>';
                 else
@@ -35,10 +35,17 @@ class Citas extends Model
                     </span>';
                 break;
             case '1':
-                $val = "Terminado";
+                $val = "Validada";
                 $fin =
                     '<div class="p-2 text-center input-sm" style="height: 100%;" >
                         <span class="text-green"><i class="fa fa-check"></i> ' . $val . '</span>
+                    </div>';
+                break;
+            case '2':
+                $val = "Anulada";
+                $fin =
+                    '<div class="p-2 text-center input-sm" style="height: 100%;">
+                        <span class="text-red"><i class="fa fa-ban text-danger"></i> ' . $val . '</span>
                     </div>';
                 break;
             default:

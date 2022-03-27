@@ -4,6 +4,16 @@
 {{-- Dentro de esta seccion ira todo el codigo CSS --}}
 @section('extracss')
     <style>
+        table#tablaCitas th{
+            font-size:12px;
+        }
+        table#tablaCitas td{
+            font-size: 13px;
+        }
+        .just{
+            text-align: justify !important;
+            font-size: 11px !important;
+        }
     </style>
     <link rel="stylesheet" href="{{asset('/plugins/timepicker/bootstrap-timepicker.min.css')}}">
 @endsection
@@ -75,12 +85,14 @@
                             <td class="just">{!! $cita->descripcion !!}</td>
                             <td>{!!$cita->getEstado(1)!!}</td>
                             <td>
-                                <a rel="modalEdit" style="cursor:pointer" href="/cita/editmodal/{{code($cita->id)}}" title="Editar" data-toggle="tooltip">
-                                    <svg class="icon text-blue iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" /><path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" /><line x1="16" y1="5" x2="19" y2="8" /></svg>
-                                </a>
-                                <a rel="modalDelete" style="cursor:pointer" href="/cita/deletemodal/{{code($cita->id)}}" data-toggle="tooltip" data-placement="top" title="Eliminar" data-toggle="tooltip">
-                                    <svg class="icon text-red iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="4" y1="7" x2="20" y2="7" /><line x1="10" y1="11" x2="10" y2="17" /><line x1="14" y1="11" x2="14" y2="17" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
-                                </a>
+                                @if ($cita->estado == "0")
+                                    <a rel="modalEdit" style="cursor:pointer" href="/cita/editmodal/{{code($cita->id)}}" title="Editar" data-toggle="tooltip">
+                                        <svg class="icon text-blue iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" /><path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" /><line x1="16" y1="5" x2="19" y2="8" /></svg>
+                                    </a>
+                                    <a rel="modalDelete" style="cursor:pointer" href="/cita/deletemodal/{{code($cita->id)}}" data-toggle="tooltip" data-placement="top" title="Eliminar" data-toggle="tooltip">
+                                        <svg class="icon text-red iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="4" y1="7" x2="20" y2="7" /><line x1="10" y1="11" x2="10" y2="17" /><line x1="14" y1="11" x2="14" y2="17" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
+                                    </a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -114,9 +126,9 @@
         </div>
     </div>
 
-    {{-- Modal estado --}}
-    <div class="modal modal-danger fade modal-slide-in-right" aria-hidden="true" role="dialog"  id="modalCambioEstado" data-backdrop="static">
-        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+    {{-- modal Cambio de estado --}}
+    <div class="modal modalPrimary fade modal-slide-in-right" aria-hidden="true" role="dialog" id="modalState" data-backdrop="static">
+        <div class="modal-dialog modal-md modal-dialog-centered">
             <div class="modal-content">
             </div>
         </div>
@@ -127,7 +139,7 @@
 <script>
     modalAjax("modalEdit","modalEdit","modal-body");
     modalAjax("modalDelete","modalDelete","modal-content");
-    modalAjax("modalCambioEstado","modalCambioEstado","modal-content");
+    modalAjax("modalState","modalState","modal-content");
     $( "#addCitas" ).click(function() {
         $('#modalCrearCitas').modal('show');
         $.each(campos, function( indice, valor ) {

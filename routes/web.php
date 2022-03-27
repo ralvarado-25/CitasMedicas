@@ -125,7 +125,7 @@ Route::middleware(['auth'])->group(function(){
     Route::delete('/cita/destroy/{id}', 'CitasController@destroy')->name('citas.destroy');
 
     Route::get('/cita/modalCambEstado/{id}', 'CitasController@modalCambioEstado')->name('citas.modalEstado');
-    Route::post('/cita/state/{id}/', 'CitasController@cambiarestado')->name('citas.changestatus');
+    Route::post('/cita/state/{id}/', 'CitasController@updateState')->name('citas.state');
 });
 
 

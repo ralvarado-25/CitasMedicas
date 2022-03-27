@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Citas;
 use App\Especialidades;
 use App\Mail\NuevoUsuario;
+use App\Mail\ValidacionCita;
 use Illuminate\Http\Request;
 use App\User;
 use Session;
 use DB;
 use PDF;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 
 class CitasController extends Controller
 {
@@ -151,8 +152,41 @@ class CitasController extends Controller
         return back();
     }
 
-    function cambiarEstado($id,$estado){
-        return back();
+    public function modalCambioEstado (Request $request, $id){
+        $cita = Citas::findOrFail(decode($id));
+        $swdisp = 0;
+        return view("adminTemplate.citas.modalEstado", compact('cita','swdisp'));
+    }
+    function updateState(Request $request,$id){
+        $messages = [
+            'checkstate.required' => 'Debe escoger una opción válida',
+        ];
+        $validateArray = [
+            'checkstate' =>'required',
+        ];
+        $validateAnul = [
+            'motivo' =>'required',
+        ];
+
+        if($request->checkstate == '2') $validateArray = array_merge($validateArray,$validateAnul);
+        $request->validate($validateArray, $messages);
+
+        $cita = Citas::findOrFail(decode($id));
+        if($cita->estado == 0){
+            $cita->estado = $request->checkstate;
+            $cita->update();
+
+            $mailPaciente = userMail($cita->user_id);
+            $motivo = $request->motivo;
+            Mail::to($mailPaciente)->send(new ValidacionCita($cita, $motivo));
+            toastr()->info('Enviado con exito.','Mail de información', ['positionClass' => 'toast-bottom-right']);
+
+            if($cita->estado == "1")
+                toastr()->info('Validada con éxito.','Cita '.$cita->cod, ['positionClass' => 'toast-bottom-right']);
+            else
+                toastr()->error('Anulada correctamente.','Cita '.$cita->cod, ['positionClass' => 'toast-bottom-right']);
+        }
+        return  \Response::json(['success' => '1']);
     }
 
     /**
