@@ -92,13 +92,42 @@
     {{-- AQUI SE INCLUIRAN LOS MODALES PARA CREACION EDICION Y ELIMINACION --}}
     @include('adminTemplate.citas.modalCreate')
 
-    @include('adminTemplate.citas.modalEdit')
-    @include('adminTemplate.citas.modalDelete')
+    {{-- Modal Editar --}}
+    <div class="modal modalPrimary fade modal-slide-in-right" aria-hidden="true" role="dialog"  id="modalEdit" data-backdrop="static">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar especialidad</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
 
+    {{-- Modal Eliminar --}}
+    <div class="modal modal-danger fade modal-slide-in-right" aria-hidden="true" role="dialog"  id="modalDelete" data-backdrop="static">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+
+    {{-- Modal estado --}}
+    <div class="modal modal-danger fade modal-slide-in-right" aria-hidden="true" role="dialog"  id="modalCambioEstado" data-backdrop="static">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
 @endsection
 @section('scripts')
 <script src="{{asset('/plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
 <script>
+    modalAjax("modalEdit","modalEdit","modal-body");
+    modalAjax("modalDelete","modalDelete","modal-content");
+    modalAjax("modalCambioEstado","modalCambioEstado","modal-content");
     $( "#addCitas" ).click(function() {
         $('#modalCrearCitas').modal('show');
         $.each(campos, function( indice, valor ) {
