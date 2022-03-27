@@ -197,7 +197,49 @@ class UserController extends Controller
     public function update(Request $request, $id){
         $user = User::where('id',decode($id))->first();
         // Validacion por request
-        $this->validateUpdateUser($request, $user);
+        $messages = [
+            'name.required' => 'El campo Nombre(s) es obligatorio',
+            'name.min' => 'El campo Nombre(s) debe tener como mínimo 2 caracteres',
+            'name.max' => 'El campo Nombre(s) debe tener como máximo 40 caracteres',
+            'ap_paterno.required' => 'El campo Apellido Paterno es obligatorio',
+            'ap_paterno.min' => 'El campo Apellido Paterno debe tener como mínimo 2 caracteres',
+            'ap_paterno.max' => 'El campo Apellido Paterno debe tener como máximo 50 caracteres',
+            'ap_materno.min' => 'El campo Apellido Materno debe tener como mínimo 2 caracteres',
+            'ap_materno.max' => 'El campo Apellido Materno debe tener como máximo 50 caracteres',
+            'cargo.min' => 'El campo Cargo debe tener como mínimo 2 caracteres',
+            'cargo.max' => 'El campo Cargo debe tener como máximo 100 caracteres',
+            'nro_doc.required' => 'El campo Nº de documento es obligatorio.',
+            'fecha_nac.date_format'  => 'El campo Fecha de Nacimiento no corresponde a una fecha válida',
+
+            // MENSAJES PASSWORD
+            'password_first.min'  => 'El campo Contraseña Nueva debe contener al menos 8 caracteres.',
+            'password_first.required'  => 'El campo Contraseña Nueva" es obligatorio',
+            'password_first.regex'  => 'El campo Contraseña Nueva" NO CUMPLE CON LOS REQUERIMIENTOS',
+            'new_password.min'  => 'El campo Confirmar Contraseña Nueva debe contener al menos 8 caracteres.',
+            'new_password.required'  => 'El campo Confirmar Contraseña Nueva es obligatorio',
+            'new_password.regex'  => 'El campo Confirmar Contraseña Nueva NO CUMPLE CON LOS REQUERIMIENTOS',
+            'new_password.same' => 'Los campos "Contraseña nueva" y "Confirmar contraseña nueva" deben coincidir.'
+        ];
+
+        $validateArray = [
+            'username' => 'bail|required|max:45|min:5|regex:/^[A-Za-z0-9ñáéíóúÁÉÍÓÚÑ@#$%^&*+:;,. -]+$/|unique:users,username,'.$user->id,
+            'name' => 'bail|required|max:40|min:2',
+            'ap_paterno' => 'bail|required|max:50|min:2',
+            'ap_materno' => 'bail|nullable|max:50|min:2',
+            'cargo'=>'min:2|max:100',
+            'email' => 'bail|required|email:filter',
+            'celular'=>'min:3|max:20',
+            'nro_doc' => 'required',
+        ];
+
+        $validatePassword = [
+            'password_first' => 'bail|required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
+            'new_password' => 'bail|required|min:8|same:password_first|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'
+        ];
+        if($request->auxpass == 1 ){
+            $validateArray = array_merge($validateArray,$validatePassword);
+        }
+        $request->validate($validateArray,$messages);
 
         DB::beginTransaction();
         try {
