@@ -37,6 +37,12 @@
     {{-- Botones para añadir nuevo registro --}}
     <div class="col-auto ms-auto d-print-none">
         <div class="btn-list">
+            <button type="button" class="btn btn-danger btn-pill" id="exportPdf" title="Exportar PDF">
+                <i class="fas fa-file-pdf fa-lg" ></i> &nbsp;
+                <span class="d-none d-sm-inline-block">
+                    Reporte en PDF
+                </span>
+            </button>
             <button type="button" class="btn btn-primary btn-pill" id="addCitas" title="Nueva cita">
                 <i class="fa fa-plus" ></i> &nbsp;
                 <span class="d-none d-sm-inline-block">
@@ -104,6 +110,8 @@
     {{-- AQUI SE INCLUIRAN LOS MODALES PARA CREACION EDICION Y ELIMINACION --}}
     @include('adminTemplate.citas.modalCreate')
 
+    @include('adminTemplate.citas.modalExport')
+
     {{-- Modal Editar --}}
     <div class="modal modalPrimary fade modal-slide-in-right" aria-hidden="true" role="dialog"  id="modalEdit" data-backdrop="static">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -148,6 +156,9 @@
             $("select[name="+valor+"]").removeClass('is-invalid-select').removeClass('is-valid-select');
             $("#formCreateAreas #"+valor+"-sel2 .select2-selection").removeClass('is-invalid-select').removeClass('is-valid-select');
         });
+    });
+    $( "#exportPdf" ).click(function() {
+        $('#modalExportar').modal('show');
     });
     $('.timepicker').timepicker({
         showInputs: false,

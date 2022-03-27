@@ -55,4 +55,24 @@ class Citas extends Model
         }
         return $estilos == 1 ? $fin : $val;
     }
+
+    public function scopeRangeDate($query,$start,$final, $type){
+        if($start != '' && $final != '' && $type == 'r'){
+            $query->whereBetween('fecha', [$start, $final]);
+        }
+    }
+
+    public function scopeEspecialidad($query,$val){
+        if ($val != "" && $val != "t") {
+            $query->whereHas('especialidades', function ($rq) use ($val) {
+                $rq->where('id', $val);
+            });
+        }
+    }
+
+    public function scopePaciente($query, $id){
+        if($id != "" && $id != 't'){
+            $query->where('user_id', $id);
+        }
+    }
 }

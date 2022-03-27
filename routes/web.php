@@ -126,6 +126,9 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/cita/modalCambEstado/{id}', 'CitasController@modalCambioEstado')->name('citas.modalEstado');
     Route::post('/cita/state/{id}/', 'CitasController@updateState')->name('citas.state');
+
+    // Exportar PDF
+    Route::get('/cita_pdf', 'CitasController@exportPdf')->name('citas.export');
 });
 
 
