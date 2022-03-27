@@ -16,8 +16,9 @@ class CitasController extends Controller
     public function index (Request $request){
         $citas = Citas::get();
         $especialidades = Especialidades::where('activo',1)->get();
+        $usuarios = User::where('active',1)->orderBy('ap_paterno')->get();
         Session::put('item', '1.');
-        return view("adminTemplate.citas.index", compact('citas','especialidades'));
+        return view("adminTemplate.citas.index", compact('citas','especialidades','usuarios'));
     }
 
     /**

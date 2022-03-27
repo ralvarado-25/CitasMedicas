@@ -5,7 +5,7 @@
 @section('extracss')
     <style>
     </style>
-
+    <link rel="stylesheet" href="{{asset('/plugins/timepicker/bootstrap-timepicker.min.css')}}">
 @endsection
 {{-- Cabecera de la pagina --}}
 @section('contenidoHeader')
@@ -27,7 +27,7 @@
     {{-- Botones para añadir nuevo registro --}}
     <div class="col-auto ms-auto d-print-none">
         <div class="btn-list">
-            <button type="button" class="btn btn-primary btn-pill" id="addEspecialidad" title="Nueva cita">
+            <button type="button" class="btn btn-primary btn-pill" id="addCitas" title="Nueva cita">
                 <i class="fa fa-plus" ></i> &nbsp;
                 <span class="d-none d-sm-inline-block">
                     Cita
@@ -97,8 +97,23 @@
 
 @endsection
 @section('scripts')
-
+<script src="{{asset('/plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
 <script>
+    $( "#addCitas" ).click(function() {
+        $('#modalCrearCitas').modal('show');
+        $.each(campos, function( indice, valor ) {
+            $("#"+valor+"-error").html( "" );
+            $("[name="+valor+"]").removeClass('is-invalid').removeClass('is-valid');
+            $("select[name="+valor+"]").removeClass('is-invalid-select').removeClass('is-valid-select');
+            $("#formCreateAreas #"+valor+"-sel2 .select2-selection").removeClass('is-invalid-select').removeClass('is-valid-select');
+        });
+    });
+    $('.timepicker').timepicker({
+        showInputs: false,
+        minuteStep: 60,
+        showMeridian: false,
+        defaultTime: null
+    });
     $(document).ready(function () {
         var table = $('#tablaCitas').DataTable({
             'mark'        : true,
