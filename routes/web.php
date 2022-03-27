@@ -107,7 +107,9 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/especialidad/update/{id}', 'EspecialidadesController@update')->name('especialidades.update');
     Route::get('/especialidad/deletemodal/{id}', 'EspecialidadesController@modalDelete')->name('especialidades.deletemodal');
     Route::delete('/especialidad/destroy/{id}', 'EspecialidadesController@destroy')->name('especialidades.destroy');
-    Route::get('/especialidad/state/{id}/{estado}', 'EspecialidadesController@changeStatus')->name('especialidades.changestatus');
+
+    Route::get('/especialidad/modalCambEstado/{id}', 'EspecialidadesController@modalCambioEstado')->name('especialidades.modalEstado');
+    Route::post('/especialidad/state/{id}/', 'EspecialidadesController@cambiarestado')->name('especialidades.changestatus');
 });
 
 

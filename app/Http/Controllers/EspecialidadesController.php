@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 class EspecialidadesController extends Controller
 {
     public function index (Request $request){
-        $especialidades = Especialidades::where('activo',1)->get();
+        $especialidades = Especialidades::get();
         Session::put('item', '4.');
         return view("adminTemplate.especialidades.index", compact('especialidades'));
     }
@@ -149,7 +149,6 @@ class EspecialidadesController extends Controller
         return view("adminTemplate.especialidades.modalDelete", compact('esp'));
     }
 
-
     /**
      * FUncion para eliminar registro
      */
@@ -160,7 +159,24 @@ class EspecialidadesController extends Controller
         return back();
     }
 
-    function cambiarEstado($id,$estado){
+    /**
+     * Muestra ventana para la edicion de especialidad
+     */
+    public function modalCambioEstado (Request $request, $id){
+        $esp = Especialidades::findOrFail(decode($id));
+        return view("adminTemplate.especialidades.modalCambioEstado", compact('esp'));
+    }
+
+    public function cambiarestado($id){
+        $esp = Especialidades::findOrFail(decode($id));
+        if ($esp->activo=='0') {
+            $esp->activo='1';
+            toastr()->info('Activada correctamente.','Especialidad '.$esp->nombre, ['positionClass' => 'toast-bottom-right']);
+        }else {
+            $esp->activo='0';
+            toastr()->warning('Desactivada correctamente.','Especialidad '.$esp->nombre, ['positionClass' => 'toast-bottom-right']);
+        }
+        $esp->update();
         return back();
     }
 

@@ -78,12 +78,12 @@
                                     <svg class="icon text-blue iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" /><path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" /><line x1="16" y1="5" x2="19" y2="8" /></svg>
                                 </a>
 
-                                @if ($esp->active==1)
-                                    <a rel="modalCambioEstado" style="cursor:pointer" href="/users/modalCambEstado/{{code($esp->id)}}" title="Desactivar" data-toggle="tooltip">
+                                @if ($esp->activo==1)
+                                    <a rel="modalCambioEstado" style="cursor:pointer" href="/especialidad/modalCambEstado/{{code($esp->id)}}" title="Desactivar" data-toggle="tooltip">
                                         <svg class="icon text-red iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h10v6a3 3 0 0 1 -3 3h-4a3 3 0 0 1 -3 -3v-6" /><line x1="9" y1="3" x2="9" y2="7" /><line x1="15" y1="3" x2="15" y2="7" /><path d="M12 16v2a2 2 0 0 0 2 2h3" /></svg>
                                     </a>
                                 @else
-                                    <a rel="modalCambioEstado" style="cursor:pointer" href="/users/modalCambEstado/{{code($esp->id)}}" title="Activar" data-toggle="tooltip">
+                                    <a rel="modalCambioEstado" style="cursor:pointer" href="/especialidad/modalCambEstado/{{code($esp->id)}}" title="Activar" data-toggle="tooltip">
                                         <svg class="icon text-green iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h10v6a3 3 0 0 1 -3 3h-4a3 3 0 0 1 -3 -3v-6" /><line x1="9" y1="3" x2="9" y2="7" /><line x1="15" y1="3" x2="15" y2="7" /><path d="M12 16v2a2 2 0 0 0 2 2h3" /></svg>
                                     </a>
                                 @endif
@@ -128,6 +128,14 @@
             </div>
         </div>
     </div>
+
+    {{-- Modal estado --}}
+    <div class="modal modal-danger fade modal-slide-in-right" aria-hidden="true" role="dialog"  id="modalCambioEstado" data-backdrop="static">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
 @endsection
 @section('scripts')
 <script src="{{asset('/plugins/fileinput/js/fileinput.min.js')}}"></script>
@@ -135,7 +143,7 @@
         modalAjax("modalShow","modalShow","modal-content");
         modalAjax("modalEdit","modalEdit","modal-body");
         modalAjax("modalDelete","modalDelete","modal-content");
-        var campos = ['nombre','descripcion'];
+        modalAjax("modalCambioEstado","modalCambioEstado","modal-content");
         $( "#addEspecialidad" ).click(function() {
             $('#modalCrearEspecialidad').modal('show');
             $.each(campos, function( indice, valor ) {
@@ -173,8 +181,6 @@
                         }
                     });
 
-                    modalAjax("modalEliminar","modalEliminar","modal-content");
-                    modalAjax("modalCambioEstado","modalCambioEstado","modal-content");
                     $('.inputSearchDT').on('paste', function(e) {
                         var valor = e.originalEvent.clipboardData.getData('Text');
                         var id = $(this).attr('id');
