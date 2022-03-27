@@ -17,7 +17,7 @@
                         Dentalife
                     </div>
                     <h2 class="page-title">
-                        <i class="fa fa-globe-americas"></i> &nbsp;
+                        <i class="fas fa-clipboard-list icon"></i> &nbsp;
                         Control de citas
                     </h2>
                 </div>
@@ -27,14 +27,66 @@
     {{-- Botones para añadir nuevo registro --}}
     <div class="col-auto ms-auto d-print-none">
         <div class="btn-list">
-            {{-- los botones iran aqui --}}
+            <button type="button" class="btn btn-primary btn-pill" id="addEspecialidad" title="Nueva cita">
+                <i class="fa fa-plus" ></i> &nbsp;
+                <span class="d-none d-sm-inline-block">
+                    Cita
+                </span>
+            </button>
         </div>
     </div>
 @endsection
 @section('contenido')
     {{-- EL CONTENIDO GRAL DE LA VISTA IRA AQUI --}}
     <div class="row">
-        Contenido aca
+        <div class="table-responsive">
+            <table class="table table-vcenter table-center table-sm table-hover" id="tablaCitas">
+                <thead>
+                    <tr>
+                        <th width="10%">CÓDIGO</th>
+                        <th width="10%">PACIENTE</th>
+                        <th width="10%">ESPECIALIDAD</th>
+                        <th width="10%">FECHA Y HORA</th>
+                        <th width="20%">DESCRIPCIÓN</th>
+                        <th width="10%">ESTADO</th>
+                        <th width="10%">OPERACIONES</th>
+                    </tr>
+                </thead>
+
+                <thead role="row">
+                    <tr class="filters">
+                        <td><input style="width: 100%;font-size:10px" id="cita0" class="form-control" type="text" placeholder="🔍 &nbsp;Buscar" name="codigob"/></td>
+                        <td><input style="width: 100%;font-size:10px" id="cita1" class="form-control" type="text" placeholder="🔍 &nbsp;Buscar" name="pacienteb"/></td>
+                        <td><input style="width: 100%;font-size:10px" id="cita2" class="form-control" type="text" placeholder="🔍 &nbsp;Buscar" name="especialidadb"/></td>
+                        <td><input style="width: 100%;font-size:10px" id="cita3" class="form-control" type="text" placeholder="🔍 &nbsp;Buscar" name="fechab"/></td>
+                        <td><input style="width: 100%;font-size:10px" id="cita4" class="form-control" type="text" placeholder="🔍 &nbsp;Buscar" name="descripcionb"/></td>
+                        <td><input style="width: 100%;font-size:10px" id="cita5" class="form-control" type="text" placeholder="🔍 &nbsp;Buscar" name="estadob"/></td>
+                        <td></td>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach($citas as $cita)
+                        <tr>
+                            <td class="font-weight-bold">{!!$cita->cod!!}</td>
+                            <td>{{userFullName($cita->user_id)}}</td>
+                            <td>{{$cita->especialidades->nombre}}</td>
+                            <td>{{$cita->getFechaHora()}} Horas</td>
+                            <td class="just">{!! $cita->descripcion !!}</td>
+                            <td>{!!$cita->getEstado(1)!!}</td>
+                            <td>
+                                <a rel="modalEdit" style="cursor:pointer" href="/cita/editmodal/{{code($cita->id)}}" title="Editar" data-toggle="tooltip">
+                                    <svg class="icon text-blue iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" /><path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" /><line x1="16" y1="5" x2="19" y2="8" /></svg>
+                                </a>
+                                <a rel="modalDelete" style="cursor:pointer" href="/cita/deletemodal/{{code($cita->id)}}" data-toggle="tooltip" data-placement="top" title="Eliminar" data-toggle="tooltip">
+                                    <svg class="icon text-red iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="4" y1="7" x2="20" y2="7" /><line x1="10" y1="11" x2="10" y2="17" /><line x1="14" y1="11" x2="14" y2="17" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 
     {{-- AQUI SE INCLUIRAN LOS MODALES PARA CREACION EDICION Y ELIMINACION --}}
@@ -48,7 +100,7 @@
 
 <script>
     $(document).ready(function () {
-        var table = $('#tablePrograms').DataTable({
+        var table = $('#tablaCitas').DataTable({
             'mark'        : true,
             'paging'      : true,
             'lengthChange': true,
@@ -72,6 +124,29 @@
                     delay: {
                         "hide": 200
                     }
+                });
+
+                $('.inputSearchDT').on('paste', function(e) {
+                    var valor = e.originalEvent.clipboardData.getData('Text');
+                    var id = $(this).attr('id');
+                    if ( noPegar(valor,id,'top') == 1) e.preventDefault();
+                });
+                $('.inputSearchDT').on('drop', function(e) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    var id = $(this).attr('id');
+                    $('#'+id).attr('data-toggle','popover');
+                    $('#'+id).attr('data-trigger','manual');
+                    $('#'+id).attr('data-content','<span class="text-red font-weight-bold"><center><i class="fa fa-ban"></i> La acción no se puede realizar.<br>Por favor escríba el texto</center></span>');
+                    $('#'+id).attr('data-placement','top');
+                    $('#'+id).attr('data-html','true');
+                    $('#'+id).attr('data-container','body');
+                    $('#'+id).popover('show');
+                    setTimeout(function(){
+                        $('#'+id).popover('hide');
+                        $('#'+id).removeAttr('data-toggle');
+                        $('#'+id).removeAttr('data-trigger');
+                    }, 2000)
                 });
             }
         });

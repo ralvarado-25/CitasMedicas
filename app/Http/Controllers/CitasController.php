@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Citas;
+use App\Especialidades;
 use App\Mail\NuevoUsuario;
 use Illuminate\Http\Request;
 use App\User;
@@ -13,9 +14,10 @@ use Mail;
 class CitasController extends Controller
 {
     public function index (Request $request){
-        $filtro = 'ejemplo de variable';
+        $citas = Citas::get();
+        $especialidades = Especialidades::where('activo',1)->get();
         Session::put('item', '1.');
-        return view("adminTemplate.citas.index", compact('filtro'));
+        return view("adminTemplate.citas.index", compact('citas','especialidades'));
     }
 
     /**
