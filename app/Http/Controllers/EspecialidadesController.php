@@ -145,8 +145,10 @@ class EspecialidadesController extends Controller
      * Muestra ventana para la edicion de especialidad
      */
     public function modalDelete (Request $request, $id){
+
         $esp = Especialidades::findOrFail(decode($id));
-        return view("adminTemplate.especialidades.modalDelete", compact('esp'));
+        $count = Especialidades::where('id',decode($id))->whereHas('citas')->count();
+        return view("adminTemplate.especialidades.modalDelete", compact('esp','count'));
     }
 
     /**

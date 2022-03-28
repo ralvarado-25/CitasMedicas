@@ -77,7 +77,11 @@
                                                 </tr>
                                                 <tr class="fontFamily" style="margin: 0;">
                                                     <td class="content-block fontFamily" style="vertical-align: top; margin: 0; padding: 0 0 20px; font-size:14px" valign="top">
-                                                        <b>Paciente: </b> {{userFullName($cita->user_id)}}
+                                                        @if (isset($cita->origen) && $cita->origen != "")
+                                                            <b>Paciente: </b> <i>Los datos generales se encuentran en la descripción</i>
+                                                        @else
+                                                            <b>Paciente: </b> {{userFullName($cita->user_id)}}
+                                                        @endif
                                                     </td>
                                                 </tr>
                                                 <tr class="fontFamily" style="margin: 0;">
@@ -92,12 +96,12 @@
                                                 </tr>
                                                 <tr class="fontFamily" style="margin: 0;">
                                                     <td class="content-block fontFamily" style="vertical-align: top; margin: 0; padding: 0 0 20px; font-size:14px" valign="top">
-                                                        <b>Fecha y hora de cita: </b> {{ date("d/m/Y",strtotime($cita->fecha))}}
+                                                        <b>Fecha y hora de cita: </b> {{ date("d/m/Y H:i",strtotime($cita->fecha))}}
                                                     </td>
                                                 </tr>
                                                 <tr class="fontFamily" style="margin: 0;">
                                                     <td class="content-block fontFamily" style="vertical-align: top; margin: 0; padding: 0 0 20px; font-size:14px" valign="top">
-                                                        <b>Descripción: </b> {!! $cita->descripcion !!}
+                                                        <b>Descripción: </b> <br> {!! $cita->descripcion !!}
                                                     </td>
                                                 </tr>
                                                 @if ($cita->estado == '2')

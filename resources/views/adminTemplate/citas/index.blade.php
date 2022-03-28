@@ -89,7 +89,15 @@
                     @foreach($citas as $cita)
                         <tr>
                             <td class="font-weight-bold">{!!$cita->cod!!}</td>
-                            <td>{{userFullName($cita->user_id)}}</td>
+                            <td>
+                                @if (isset($cita->origen) && $cita->origen != '')
+                                    <i class="text-orange">Solicitud desde pagina web</i> <br>
+                                    <b>E-mail: </b>
+                                    <a href="mailto:{{$cita->origen}}" target="_blank">{{$cita->origen}}</a>
+                                @else
+                                    {{userFullName($cita->user_id)}}
+                                @endif
+                            </td>
                             <td>{{$cita->especialidades->nombre}}</td>
                             <td>{!!$cita->getFechaHora()!!}</td>
                             <td class="just">{!! $cita->descripcion !!}</td>

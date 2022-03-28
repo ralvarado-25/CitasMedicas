@@ -18,9 +18,14 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 |
 */
 
+use App\User;
+use App\Especialidades;
 Route::get('/', function () {
-    return view('inicioPaginaWeb');
+    $especialidades = Especialidades::where('activo',1)->get();
+    $usuarios = User::where('active',1)->orderBy('ap_paterno')->get();
+    return view("inicioPaginaWeb", compact('especialidades','usuarios'));
 });
+Route::post('/cita_web_store','CitaWebController@store')->name('citas.store.web');
 
 Auth::routes();
 

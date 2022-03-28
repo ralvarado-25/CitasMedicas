@@ -4,53 +4,57 @@
 
     <div class="section-title">
         <h2>RESERVAR UNA CITA</h2>
-        <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
     </div>
 
-    <form action="forms/appointment.php" method="post" role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100">
+    {{-- <form action="forms/appointment.php" method="post" role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100"> --}}
+    {!! Form::open( array('route' =>'citas.store.web','method'=>'POST','autocomplete'=>'off','files'=>'true','id'=>'formCreateCitas','class'=>'php-email-form', 'onsubmit'=>'btnSubmit.disabled = true; return true;'))!!}
         <div class="row">
-        <div class="col-md-4 form-group">
-            <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
-        </div>
-        <div class="col-md-4 form-group mt-3 mt-md-0">
-            <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
-        </div>
-        <div class="col-md-4 form-group mt-3 mt-md-0">
-            <input type="tel" class="form-control" name="phone" id="phone" placeholder="Your Phone" required>
-        </div>
-        </div>
-        <div class="row">
-        <div class="col-md-4 form-group mt-3">
-            <input type="datetime" name="date" class="form-control datepicker" id="date" placeholder="Appointment Date" required>
-        </div>
-        <div class="col-md-4 form-group mt-3">
-            <select name="department" id="department" class="form-select">
-            <option value="">Select Department</option>
-            <option value="Department 1">Department 1</option>
-            <option value="Department 2">Department 2</option>
-            <option value="Department 3">Department 3</option>
-            </select>
-        </div>
-        <div class="col-md-4 form-group mt-3">
-            <select name="doctor" id="doctor" class="form-select">
-            <option value="">Select Doctor</option>
-            <option value="Doctor 1">Doctor 1</option>
-            <option value="Doctor 2">Doctor 2</option>
-            <option value="Doctor 3">Doctor 3</option>
-            </select>
-        </div>
+            <div class="col-md-4 form-group" id="name--label">
+                <input type="text" name="name" class="form-control" id="name" placeholder="Nombre completo">
+                <span class="text-red" id="name-error"></span>
+            </div>
+            <div class="col-md-4 form-group mt-3 mt-md-0" id="email--label">
+                <input type="text" class="form-control" name="email" id="email" placeholder="Email">
+                <span class="text-red" id="email-error"></span>
+            </div>
+            <div class="col-md-4 form-group mt-3 mt-md-0" id="phone--label">
+                <input type="text" class="form-control" name="phone" id="phone" placeholder="Télefono">
+                <span class="text-red" id="phone-error"></span>
+            </div>
         </div>
 
-        <div class="form-group mt-3">
-        <textarea class="form-control" name="message" rows="5" placeholder="Message (Optional)"></textarea>
+        <div class="row">
+            <div class="col-md-4 form-group mt-3" id="date--label">
+                <input type="datetime" name="date" class="form-control datepicker" id="date" placeholder="Fecha de cita">
+                <span class="text-red" id="date-error"></span>
+            </div>
+            <div class="col-md-4 form-group mt-3 " id="hour--label">
+                <input type="datetime" name="hour" class="form-control timepicker" placeholder="Hora de cita">
+                <span class="text-red" id="hour-error"></span>
+            </div>
+            <div class="col-md-4 form-group mt-3" id="especialidad--label">
+                <select name="especialidad" id="especialidad" class="form-select">
+                    <option value="" hidden>Seleccionar especialidad</option>
+                    @foreach ($especialidades as $esp)
+                        <option value="{{$esp->id}}"> {{$esp->nombre}}</option>
+                    @endforeach
+                </select>
+                <span class="text-red" id="especialidad-error"></span>
+            </div>
+        </div>
+
+
+
+        <div class="form-group mt-3" id="name--label">
+            <textarea class="form-control" name="message" rows="5" placeholder="Mensaje adicional (Opcional)"></textarea>
+            <span class="text-red" id="message-error"></span>
         </div>
         <div class="my-3">
-        <div class="loading">Loading</div>
-        <div class="error-message"></div>
-        <div class="sent-message">Your appointment request has been sent successfully. Thank you!</div>
+        <div class="sent-message" style="display: none">Su solicitud de cita ha sido enviada con éxito. ¡Gracias!</div>
         </div>
-        <div class="text-center"><button type="submit">Confirmar cita</button></div>
-    </form>
+        <div class="text-center"><button type="submit" name="btnSubmit" id="botonCita">Confirmar cita</button></div>
+    {{Form::Close()}}
 
     </div>
 </section>
+

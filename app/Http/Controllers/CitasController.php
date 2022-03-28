@@ -73,6 +73,7 @@ class CitasController extends Controller
             $cita->fecha = convFechaDT($request->fecha).' '.$request->hora;
             $cita->descripcion = $request->descripcion;
             $cita->estado = "0";
+            $cita->origen = null;
             $cita->save();
             toastr()->success('Registrada con éxito.','Cita '.$cita->cod, ['positionClass' => 'toast-bottom-right']);
             DB::commit();
@@ -178,7 +179,10 @@ class CitasController extends Controller
             $cita->estado = $request->checkstate;
             $cita->update();
 
-            $mailPaciente = userMail($cita->user_id);
+            if(isset($cita->origen) && $cita->origen != '')
+                $mailPaciente = $cita->origen;
+            else
+                $mailPaciente = userMail($cita->user_id);
             $motivo = $request->motivo;
             Mail::to($mailPaciente)->send(new ValidacionCita($cita, $motivo));
             toastr()->info('Enviado con exito.','Mail de información', ['positionClass' => 'toast-bottom-right']);
