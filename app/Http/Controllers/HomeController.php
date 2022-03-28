@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Citas;
+use App\Especialidades;
 use Illuminate\Http\Request;
 use Session;
 
@@ -24,8 +25,19 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
+        $especialidades = Especialidades::whereHas('citas')->withCount('citas as asignados')->get();
+        $arrayAsignado = [];
+        $espNombre = '';
+        foreach ($especialidades as $especialidad) {
+            array_push($arrayAsignado, $especialidad->asignados);
+            $espNombre .= '"'.$especialidad->nombre.'",';
+        }
+        $arrayData2[0]['name'] = 'Asignadas';
+        $arrayData2[0]['data'] = $arrayAsignado;
+        $jsonData2 = json_encode($arrayData2);
+
         Session::put('item', '0.');
-        return view('adminTemplate.home');
+        return view('adminTemplate.home', compact('jsonData2','espNombre'));
     }
 
     public function datesAjax(Request $request){
@@ -37,6 +49,7 @@ class HomeController extends Controller
         whereDate('fecha','>=',$start)
         ->whereDate('fecha','<=',$end)
         ->orderBy('fecha')
+        ->userPerm()
         ->get();
         $salida_cron = [];
         foreach ($citas as $key => $cita) {

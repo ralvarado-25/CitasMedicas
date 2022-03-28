@@ -42,10 +42,10 @@ class User extends Authenticatable
     ];
 
     public function getName(){
-        // if(Gate::check('users.show'))
+        if(Gate::check('users.show'))
             return '<a href="/usuarios/'.code($this->id).'" target="_blank">'.userFullName($this->id).'</a>';
-        // else
-        //     return userFullName($this->id);
+        else
+            return userFullName($this->id);
     }
 
     public function rolesUsers(){
