@@ -28,37 +28,38 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 /* ---   UTILIZANDO MIDDLEWARE   --- */
 Route::middleware(['auth'])->group(function(){
-    require __DIR__.'/routes_b.php';
-    require __DIR__.'/routes_o.php';
-    require __DIR__.'/routes_r.php';
-    require __DIR__.'/routes_k.php';
-    require __DIR__.'/routes_m.php';
-    require __DIR__.'/routes_j.php';
-    require __DIR__.'/routes_d.php';
-
-    // Ruta para el index (vista principal y listado)
-    Route::get('/citas', 'CitasController@index')->name('citas.index');
 
     // ========================================================================================
     //                                    RUTAS DE ROLES
     // ========================================================================================
-    // Ruta para el index (vista principal y listado)
-    Route::get('/roles', 'RoleController@index')->name('roles.index');
-    // Ruta para mostrar los datos generales de un rol
-    Route::get('/roles/show/{role}','RoleController@show')->name('roles.show');
-    // Ruta para ir a la vista donde se creara el rol
-    Route::get('/roles/create','RoleController@create')->name('roles.create');
-    // Ruta para guardar rol nuevo
-    Route::post('/roles_store','RoleController@store')->name('roles.store');
-    // Ruta para ir a la vista donde se editara el rol
-    Route::post('/roles/{role}','RoleController@update')->name('roles.update');
-    // Ruta para actualizar rol
-    Route::get('/roles/edit/{id}','RoleController@edit')->name('roles.edit');
-    // Ruta para actualizar rol
-    Route::get('/roles_change/{role}','RoleController@changestatus')->name('roles.changestatus');
-    // Ruta para eliminar rol
-    Route::post('/roles_delete/{id}','RoleController@destroy')->name('roles.destroy');
-
+    Route::group(['middleware' => ['permission:roles.index']], function () {
+        // Ruta para el index (vista principal y listado)
+        Route::get('/roles', 'RoleController@index')->name('roles.index');
+    });
+    Route::group(['middleware' => ['permission:roles.show']], function () {
+        // Ruta para mostrar los datos generales de un rol
+        Route::get('/roles/show/{role}','RoleController@show')->name('roles.show');
+    });
+    Route::group(['middleware' => ['permission:roles.create']], function () {
+        // Ruta para ir a la vista donde se creara el rol
+        Route::get('/roles/create','RoleController@create')->name('roles.create');
+        // Ruta para guardar rol nuevo
+        Route::post('/roles_store','RoleController@store')->name('roles.store');
+    });
+    Route::group(['middleware' => ['permission:roles.edit']], function () {
+        // Ruta para ir a la vista donde se editara el rol
+        Route::post('/roles/{role}','RoleController@update')->name('roles.update');
+        // Ruta para actualizar rol
+        Route::get('/roles/edit/{id}','RoleController@edit')->name('roles.edit');
+    });
+    Route::group(['middleware' => ['permission:roles.changestatus']], function () {
+        // Ruta para actualizar rol
+        Route::get('/roles_change/{role}','RoleController@changestatus')->name('roles.changestatus');
+    });
+    Route::group(['middleware' => ['permission:roles.destroy']], function () {
+        // Ruta para eliminar rol
+        Route::post('/roles_delete/{id}','RoleController@destroy')->name('roles.destroy');
+    });
 
     // ========================================================================================
     //                                    RUTAS DE USUARIOS
@@ -115,38 +116,64 @@ Route::middleware(['auth'])->group(function(){
     // ========================================================================================
     //                                    RUTAS DE ESPECIALIDADES
     // ========================================================================================
-    Route::get('/especialidades', 'EspecialidadesController@index')->name('especialidades.index');
-    // Ruta para guardar especialidad nueva
-    Route::post('/especialidad_store','EspecialidadesController@store')->name('especialidades.store');
-    // Ruta para mostrar los datos generales de una especialidad
-    Route::get('/especialidades/{id}','EspecialidadesController@show')->name('especialidades.show');
-
-    Route::get('/especialidad/editmodal/{id}', 'EspecialidadesController@modalEdit')->name('especialidades.editmodal');
-    Route::post('/especialidad/update/{id}', 'EspecialidadesController@update')->name('especialidades.update');
-    Route::get('/especialidad/deletemodal/{id}', 'EspecialidadesController@modalDelete')->name('especialidades.deletemodal');
-    Route::delete('/especialidad/destroy/{id}', 'EspecialidadesController@destroy')->name('especialidades.destroy');
-
-    Route::get('/especialidad/modalCambEstado/{id}', 'EspecialidadesController@modalCambioEstado')->name('especialidades.modalEstado');
-    Route::post('/especialidad/state/{id}/', 'EspecialidadesController@cambiarestado')->name('especialidades.changestatus');
+    Route::group(['middleware' => ['permission:especialidades.index']], function () {
+        Route::get('/especialidades', 'EspecialidadesController@index')->name('especialidades.index');
+        // Ruta para mostrar los datos generales de una especialidad
+        Route::get('/especialidades/{id}','EspecialidadesController@show')->name('especialidades.show');
+    });
+    Route::group(['middleware' => ['permission:especialidades.create']], function () {
+        // Ruta para guardar especialidad nueva
+        Route::post('/especialidad_store','EspecialidadesController@store')->name('especialidades.store');
+    });
+    Route::group(['middleware' => ['permission:especialidades.state']], function () {
+        Route::get('/especialidad/modalCambEstado/{id}', 'EspecialidadesController@modalCambioEstado')->name('especialidades.modalEstado');
+        Route::post('/especialidad/state/{id}/', 'EspecialidadesController@cambiarestado')->name('especialidades.changestatus');
+    });
+    Route::group(['middleware' => ['permission:especialidades.edit']], function () {
+        Route::get('/especialidad/editmodal/{id}', 'EspecialidadesController@modalEdit')->name('especialidades.editmodal');
+        Route::post('/especialidad/update/{id}', 'EspecialidadesController@update')->name('especialidades.update');
+    });
+    Route::group(['middleware' => ['permission:especialidades.delete']], function () {
+        Route::get('/especialidad/deletemodal/{id}', 'EspecialidadesController@modalDelete')->name('especialidades.deletemodal');
+        Route::delete('/especialidad/destroy/{id}', 'EspecialidadesController@destroy')->name('especialidades.destroy');
+    });
 
     // ========================================================================================
     //                                    RUTAS DE CITAS
     // ========================================================================================
-    // Ruta para el index (vista principal y listado)
-    Route::get('/citas', 'CitasController@index')->name('citas.index');
-    // Ruta para guardar especialidad nueva
-    Route::post('/cita_store','CitasController@store')->name('citas.store');
+    Route::group(['middleware' => ['permission:citas.index|citas.myindex']], function () {
+        // Ruta para el index (vista principal y listado)
+        Route::get('/citas', 'CitasController@index')->name('citas.index');
+    });
+    Route::group(['middleware' => ['permission:citas.create']], function () {
+        // Ruta para guardar especialidad nueva
+        Route::post('/cita_store','CitasController@store')->name('citas.store');
+    });
+    Route::group(['middleware' => ['permission:citas.validar']], function () {
+        Route::get('/cita/modalCambEstado/{id}', 'CitasController@modalCambioEstado')->name('citas.modalEstado');
+        Route::post('/cita/state/{id}/', 'CitasController@updateState')->name('citas.state');
+    });
+    Route::group(['middleware' => ['permission:citas.edit']], function () {
+        Route::get('/cita/editmodal/{id}', 'CitasController@modalEdit')->name('citas.editmodal');
+        Route::post('/cita/update/{id}', 'CitasController@update')->name('citas.update');
+    });
+    Route::group(['middleware' => ['permission:citas.delete']], function () {
+        Route::get('/cita/deletemodal/{id}', 'CitasController@modalDelete')->name('citas.deletemodal');
+        Route::delete('/cita/destroy/{id}', 'CitasController@destroy')->name('citas.destroy');
+    });
+    Route::group(['middleware' => ['permission:citas.export']], function () {
+        // Exportar PDF
+        Route::get('/cita_pdf', 'CitasController@exportPdf')->name('citas.export');
+    });
 
-    Route::get('/cita/editmodal/{id}', 'CitasController@modalEdit')->name('citas.editmodal');
-    Route::post('/cita/update/{id}', 'CitasController@update')->name('citas.update');
-    Route::get('/cita/deletemodal/{id}', 'CitasController@modalDelete')->name('citas.deletemodal');
-    Route::delete('/cita/destroy/{id}', 'CitasController@destroy')->name('citas.destroy');
 
-    Route::get('/cita/modalCambEstado/{id}', 'CitasController@modalCambioEstado')->name('citas.modalEstado');
-    Route::post('/cita/state/{id}/', 'CitasController@updateState')->name('citas.state');
 
-    // Exportar PDF
-    Route::get('/cita_pdf', 'CitasController@exportPdf')->name('citas.export');
+
+
+
+
+
+
 });
 
 

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Mail;
 class CitasController extends Controller
 {
     public function index (Request $request){
-        $citas = Citas::orderBy('cod','desc')->get();
+        $citas = Citas::UserPerm()->orderBy('cod','desc')->get();
         $especialidades = Especialidades::where('activo',1)->get();
         $usuarios = User::where('active',1)->orderBy('ap_paterno')->get();
         Session::put('item', '1.');
@@ -96,6 +96,8 @@ class CitasController extends Controller
      * FUncion para actualizar registro
      */
     public function update(Request $request, $id){
+        $hora = (strlen($request->horaedit) == 4) ? '0'.$request->horaedit : $request->horaedit;
+        $request->merge(array('horaedit' => $hora));
 
         $messages = [
             'pacienteedit.required' => 'Debe escoger un paciente valido',

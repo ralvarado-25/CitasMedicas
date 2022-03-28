@@ -37,7 +37,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><i class="fa fa-plus"></i> Nueva área de trabajo</h5>
+                <h5 class="modal-title"><i class="fa fa-plus"></i> Nueva especialidad</h5>
                 <button type="button" class="btn-close text-primary" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
