@@ -3,11 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Gate;
 
 class Especialidades extends Model
 {
+    public function citas(){
+        return $this->hasMany(Citas::class,'especialidad_id');
+    }
+
     public function getCod(){
-        if (1==1)
+        if(Gate::check('especialidades.show'))
             return '<a rel="modalShow" style="cursor:pointer" href="/especialidades/'.code($this->id).'" title="Ver más detalles" data-toggle="tooltip">'.$this->cod.'</a>';
         else
             return $this->cod;

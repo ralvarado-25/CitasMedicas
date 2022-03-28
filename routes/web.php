@@ -166,14 +166,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/cita_pdf', 'CitasController@exportPdf')->name('citas.export');
     });
 
-
-
-
-
-
-
-
-
+    Route::post('/calendario/ajax/ot', 'HomeController@datesAjax')->name('calendario.citas');
 });
 
 
