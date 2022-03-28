@@ -11,19 +11,46 @@
             <div class="modal-body">
                 {!! Form::open( array('route' =>'citas.store','method'=>'POST','autocomplete'=>'off','files'=>'true','id'=>'formCreateCitas', 'onsubmit'=>'btnSubmit.disabled = true; return true;'))!!}
                 <div class="row">
-                    {!! datosRegistro('create') !!}
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="form-group">
-                            <label id="paciente--label">* Paciente</label> <br>
-                            <select class="form-control form-select" name="paciente" style="width:100%">
-                                <option value="" hidden>Seleccionar</option>
-                                @foreach ($usuarios as $user)
-                                    <option value="{{$user->id}}"> {{userFullName($user->id)}}</option>
-                                @endforeach
-                            </select>
-                            <span id="paciente-error" class="text-red"></span>
+                    @if (Gate::check('citas.index'))
+                        {!! datosRegistro('create') !!}
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label id="paciente--label">* Paciente</label> <br>
+                                <select class="form-control form-select" name="paciente" style="width:100%">
+                                    <option value="" hidden>Seleccionar</option>
+                                    @foreach ($usuarios as $user)
+                                        <option value="{{$user->id}}"> {{userFullName($user->id)}}</option>
+                                    @endforeach
+                                </select>
+                                <span id="paciente-error" class="text-red"></span>
+                            </div>
                         </div>
-                    </div>
+                    @else
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label>Solicitado por</label> <br>
+                                <div class="input-icon">
+                                    <span class="input-icon-addon">
+                                        <i id="iconForm" class="fas fa-user"></i>
+                                    </span>
+                                    <input class="form-control input-incon cursor-not-allowed" value="{{userFullName(userId())}}" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label>Fecha de registro</label> <br>
+                                <div class="input-icon">
+                                    <span class="input-icon-addon">
+                                        <i id="iconForm" class="far fa-calendar-alt"></i>
+                                    </span>
+                                    <input class="form-control input-incon cursor-not-allowed" type="text" value="{{date("d/m/Y")}}" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="text" value="{{userId()}}" name="paciente" style="display: none">
+                    @endif
+
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="form-group">
                             <label id="especialidad--label">* Especialidad</label> <br>

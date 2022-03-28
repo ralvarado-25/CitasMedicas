@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Gate;
 
 class Citas extends Model
 {
@@ -23,7 +24,7 @@ class Citas extends Model
         switch ($this->estado) {
             case '0':
                 $val = "Pendiente";
-                if( 1 == 1 )
+                if( Gate::check('citas.validar') )
                     $fin =
                     '<a rel="modalState" href="/cita/modalCambEstado/'.code($this->id).'" class="text-yellow" title="Cambiar estado" data-toggle="tooltip">
                         <i class="fa fa-refresh fa-spin"></i><br> '.$val.'
@@ -73,6 +74,12 @@ class Citas extends Model
     public function scopePaciente($query, $id){
         if($id != "" && $id != 't'){
             $query->where('user_id', $id);
+        }
+    }
+
+    public function scopeUserPerm($query){
+        if ( Gate::check('citas.index')!='1') {
+            $query->where('user_id',userId());
         }
     }
 }

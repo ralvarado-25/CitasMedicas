@@ -84,7 +84,7 @@
                 {{-- =================================================================================================================== --}}
                 {{--                                              CONTROL DE CITAS                                                       --}}
                 {{-- =================================================================================================================== --}}
-                @if (Gate::check('citas.index'))
+                @if (Gate::check('citas.index') || Gate::check('citas.myindex'))
                     <li class="nav-item {!!strstr($item,'.',true)=='1'?'active':'';!!}">
                         <a class="dropdown-item" href="/citas" >
                             <span class="nav-link-icon  d-lg-inline-block">

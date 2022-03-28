@@ -37,18 +37,22 @@
     {{-- Botones para añadir nuevo registro --}}
     <div class="col-auto ms-auto d-print-none">
         <div class="btn-list">
-            <button type="button" class="btn btn-danger btn-pill" id="exportPdf" title="Exportar PDF">
-                <i class="fas fa-file-pdf fa-lg" ></i> &nbsp;
-                <span class="d-none d-sm-inline-block">
-                    Reporte en PDF
-                </span>
-            </button>
-            <button type="button" class="btn btn-primary btn-pill" id="addCitas" title="Nueva cita">
-                <i class="fa fa-plus" ></i> &nbsp;
-                <span class="d-none d-sm-inline-block">
-                    Cita
-                </span>
-            </button>
+            @if (Gate::check('citas.export'))
+                <button type="button" class="btn btn-danger btn-pill" id="exportPdf" title="Exportar PDF">
+                    <i class="fas fa-file-pdf fa-lg" ></i> &nbsp;
+                    <span class="d-none d-sm-inline-block">
+                        Reporte en PDF
+                    </span>
+                </button>
+            @endif
+            @if (Gate::check('citas.create'))
+                <button type="button" class="btn btn-primary btn-pill" id="addCitas" title="Nueva cita">
+                    <i class="fa fa-plus" ></i> &nbsp;
+                    <span class="d-none d-sm-inline-block">
+                        Cita
+                    </span>
+                </button>
+            @endif
         </div>
     </div>
 @endsection
@@ -92,12 +96,16 @@
                             <td>{!!$cita->getEstado(1)!!}</td>
                             <td>
                                 @if ($cita->estado == "0")
-                                    <a rel="modalEdit" style="cursor:pointer" href="/cita/editmodal/{{code($cita->id)}}" title="Editar" data-toggle="tooltip">
-                                        <svg class="icon text-blue iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" /><path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" /><line x1="16" y1="5" x2="19" y2="8" /></svg>
-                                    </a>
-                                    <a rel="modalDelete" style="cursor:pointer" href="/cita/deletemodal/{{code($cita->id)}}" data-toggle="tooltip" data-placement="top" title="Eliminar" data-toggle="tooltip">
-                                        <svg class="icon text-red iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="4" y1="7" x2="20" y2="7" /><line x1="10" y1="11" x2="10" y2="17" /><line x1="14" y1="11" x2="14" y2="17" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
-                                    </a>
+                                    @if (Gate::check('citas.edit'))
+                                        <a rel="modalEdit" style="cursor:pointer" href="/cita/editmodal/{{code($cita->id)}}" title="Editar" data-toggle="tooltip">
+                                            <svg class="icon text-blue iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" /><path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" /><line x1="16" y1="5" x2="19" y2="8" /></svg>
+                                        </a>
+                                    @endif
+                                    @if (Gate::check('citas.delete'))
+                                        <a rel="modalDelete" style="cursor:pointer" href="/cita/deletemodal/{{code($cita->id)}}" data-toggle="tooltip" data-placement="top" title="Eliminar" data-toggle="tooltip">
+                                            <svg class="icon text-red iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="4" y1="7" x2="20" y2="7" /><line x1="10" y1="11" x2="10" y2="17" /><line x1="14" y1="11" x2="14" y2="17" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
+                                        </a>
+                                    @endif
                                 @endif
                             </td>
                         </tr>

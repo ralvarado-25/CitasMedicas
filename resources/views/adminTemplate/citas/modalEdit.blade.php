@@ -1,18 +1,22 @@
 {{Form::Open(array('action'=>array('CitasController@update',code($cita->id)),'method'=>'POST','autocomplete'=>'off','id'=>'formEditCitas' ))}}
 <div class="row">
     {!! datosRegistro('edit') !!}
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="form-group">
-            <label id="pacienteedit--label">* Paciente</label> <br>
-            <select class="form-control form-select" name="pacienteedit" style="width:100%">
-                <option value="" hidden>Seleccionar</option>
-                @foreach ($usuarios as $user)
-                    <option value="{{$user->id}}" @if($user->id == $cita->user_id) selected @endif> {{userFullName($user->id)}}</option>
-                @endforeach
-            </select>
-            <span id="pacienteedit-error" class="text-red"></span>
+    @if (Gate::check('citas.index'))
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="form-group">
+                <label id="pacienteedit--label">* Paciente</label> <br>
+                <select class="form-control form-select" name="pacienteedit" style="width:100%">
+                    <option value="" hidden>Seleccionar</option>
+                    @foreach ($usuarios as $user)
+                        <option value="{{$user->id}}" @if($user->id == $cita->user_id) selected @endif> {{userFullName($user->id)}}</option>
+                    @endforeach
+                </select>
+                <span id="pacienteedit-error" class="text-red"></span>
+            </div>
         </div>
-    </div>
+    @else
+        <input type="text" value="{{userId()}}" name="pacienteedit" style="display: none">
+    @endif
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="form-group">
             <label id="especialidadedit--label">* Especialidad</label> <br>
