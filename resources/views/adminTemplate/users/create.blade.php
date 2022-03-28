@@ -24,19 +24,7 @@
             </div>
         </div>
     </div>
-    {{-- Botones para añadir nuevo registro --}}
-    <div class="col-auto ms-auto d-print-none">
-        <div class="btn-list">
-            <a href="/roles" class="btn btn-outline-secondary">
-                <b><svg class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="15" cy="15" r="4" /><path d="M18.5 18.5l2.5 2.5" /><path d="M4 6h16" /><path d="M4 12h4" /><path d="M4 18h4" /></svg>
-                Ver roles</b>
-            </a>
-            <a href="/usuarios" class="btn btn-outline-secondary">
-                <b><svg class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="9" cy="7" r="4" /><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg>
-                Ver usuarios</b>
-            </a>
-        </div>
-    </div>
+
 @endsection
 @section('contenido')
     {{-- EL CONTENIDO GRAL DE LA VISTA IRA AQUI --}}
@@ -103,10 +91,6 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="box-header">
                     <label id="roles--label">* Asignar rol: </label> &nbsp;&nbsp;
-                    @can('roles.create')
-                        <a href="/roles/create" class="btn btn-ghost-yellow btn-sm " target="_blank">
-                        <i class="fas fa-cogs"></i>&nbsp; Nuevo rol</a>
-                    @endcan
                 </div>
                 <div class="form-group">
                     <select class="form-control form-select" name="roles">

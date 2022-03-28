@@ -60,16 +60,18 @@
     </div>
     {{-- Botones para añadir nuevo registro --}}
     <div class="col-auto ms-auto d-print-none">
-        <div class="btn-list">
-            <a href="/usuarios_create" title="Nuevo usuario">
-                <button class="btn btn btn-primary btn-pill" >
-                    <i class="fa fa-plus fa-md" ></i> &nbsp;
-                    <span class="d-none d-sm-inline-block">
-                        Usuario
-                    </span>
-                </button>
-            </a>
-        </div>
+        @if (Gate::check('users.create'))
+            <div class="btn-list">
+                <a href="/usuarios_create" title="Nuevo usuario">
+                    <button class="btn btn btn-primary btn-pill" >
+                        <i class="fa fa-plus fa-md" ></i> &nbsp;
+                        <span class="d-none d-sm-inline-block">
+                            Usuario
+                        </span>
+                    </button>
+                </a>
+            </div>
+        @endif
     </div>
 @endsection
 @section('contenido')
@@ -184,23 +186,29 @@
                             @endif
                         </td>
                         <td>
-                            <a href="/usuarios/edit/{{code($user->id)}}" title="Editar" data-toggle="tooltip">
-                                <svg class="icon text-blue iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" /><path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" /><line x1="16" y1="5" x2="19" y2="8" /></svg>
-                            </a>
+                            @if (Gate::check('users.edit'))
+                                <a href="/usuarios/edit/{{code($user->id)}}" title="Editar" data-toggle="tooltip">
+                                    <svg class="icon text-blue iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" /><path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" /><line x1="16" y1="5" x2="19" y2="8" /></svg>
+                                </a>
+                            @endif
 
                             @if($user->id != userId())
-                                @if ($user->active==1)
-                                    <a rel="modalCambioEstado" style="cursor:pointer" href="/users/modalCambEstado/{{code($user->id)}}" title="Desactivar" data-toggle="tooltip">
-                                        <svg class="icon text-red iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h10v6a3 3 0 0 1 -3 3h-4a3 3 0 0 1 -3 -3v-6" /><line x1="9" y1="3" x2="9" y2="7" /><line x1="15" y1="3" x2="15" y2="7" /><path d="M12 16v2a2 2 0 0 0 2 2h3" /></svg>
-                                    </a>
-                                @else
-                                    <a rel="modalCambioEstado" style="cursor:pointer" href="/users/modalCambEstado/{{code($user->id)}}" title="Activar" data-toggle="tooltip">
-                                        <svg class="icon text-green iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h10v6a3 3 0 0 1 -3 3h-4a3 3 0 0 1 -3 -3v-6" /><line x1="9" y1="3" x2="9" y2="7" /><line x1="15" y1="3" x2="15" y2="7" /><path d="M12 16v2a2 2 0 0 0 2 2h3" /></svg>
+                                @if (Gate::check('users.changestatus'))
+                                    @if ($user->active==1)
+                                        <a rel="modalCambioEstado" style="cursor:pointer" href="/users/modalCambEstado/{{code($user->id)}}" title="Desactivar" data-toggle="tooltip">
+                                            <svg class="icon text-red iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h10v6a3 3 0 0 1 -3 3h-4a3 3 0 0 1 -3 -3v-6" /><line x1="9" y1="3" x2="9" y2="7" /><line x1="15" y1="3" x2="15" y2="7" /><path d="M12 16v2a2 2 0 0 0 2 2h3" /></svg>
+                                        </a>
+                                    @else
+                                        <a rel="modalCambioEstado" style="cursor:pointer" href="/users/modalCambEstado/{{code($user->id)}}" title="Activar" data-toggle="tooltip">
+                                            <svg class="icon text-green iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h10v6a3 3 0 0 1 -3 3h-4a3 3 0 0 1 -3 -3v-6" /><line x1="9" y1="3" x2="9" y2="7" /><line x1="15" y1="3" x2="15" y2="7" /><path d="M12 16v2a2 2 0 0 0 2 2h3" /></svg>
+                                        </a>
+                                    @endif
+                                @endif
+                                @if (Gate::check('users.destroy'))
+                                    <a rel="modalEliminar" style="cursor:pointer" href="/users/modalDelete/{{code($user->id)}}" data-toggle="tooltip" data-placement="top" title="Eliminar" data-toggle="tooltip">
+                                        <svg class="icon text-red iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="4" y1="7" x2="20" y2="7" /><line x1="10" y1="11" x2="10" y2="17" /><line x1="14" y1="11" x2="14" y2="17" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
                                     </a>
                                 @endif
-                                <a rel="modalEliminar" style="cursor:pointer" href="/users/modalDelete/{{code($user->id)}}" data-toggle="tooltip" data-placement="top" title="Eliminar" data-toggle="tooltip">
-                                    <svg class="icon text-red iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="4" y1="7" x2="20" y2="7" /><line x1="10" y1="11" x2="10" y2="17" /><line x1="14" y1="11" x2="14" y2="17" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
-                                </a>
                             @endif
                         </td>
                     </tr>

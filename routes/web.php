@@ -64,35 +64,53 @@ Route::middleware(['auth'])->group(function(){
     //                                    RUTAS DE USUARIOS
     // ========================================================================================
     // Ruta para el index (vista principal y listado)
-    Route::get('/usuarios', 'UserController@index')->name('user.index');
+    Route::group(['middleware' => ['permission:users.index']], function () {
+        Route::get('/usuarios', 'UserController@index')->name('user.index');
+    });
+
     // Ruta para mostrar los datos generales de un usuario
-    Route::get('/usuarios/{user}','UserController@show')->name('users.show');
-    // Ruta para ir a la vista donde se creara el usuario
-    Route::get('/usuarios_create','UserController@create')->name('users.create');
-    // Ruta para guardar usuario nuevo
-    Route::post('/usuarios_store','UserController@store')->name('users.store');
-    // Ruta para validar nombre de usuario
-    Route::post('/validar_user','UserController@validarUsername')->name('users.validar');
-    // Ruta para ir a la vista donde se editara el usuario
-    Route::get('/usuarios/edit/{user}','UserController@edit')->name('users.edit');
-    // Funcion para editar el usuario
-    Route::post('/usuarios_update/{user}','UserController@update')->name('users.update');
+    Route::group(['middleware' => ['permission:users.show']], function () {
+        Route::get('/usuarios/{user}','UserController@show')->name('users.show');
+    });
+
+    Route::group(['middleware' => ['permission:users.create']], function () {
+        // Ruta para ir a la vista donde se creara el usuario
+        Route::get('/usuarios_create','UserController@create')->name('users.create');
+        // Ruta para guardar usuario nuevo
+        Route::post('/usuarios_store','UserController@store')->name('users.store');
+    });
+
+    Route::group(['middleware' => ['permission:users.edit']], function () {
+        // Ruta para ir a la vista donde se editara el usuario
+        Route::get('/usuarios/edit/{user}','UserController@edit')->name('users.edit');
+        // Funcion para editar el usuario
+        Route::post('/usuarios_update/{user}','UserController@update')->name('users.update');
+        //  ACTUALIZAR ROL
+        Route::put('/users/{user}/rol','UserController@updaterol')->name('updaterol');
+    });
+
+    Route::group(['middleware' => ['permission:users.profile']], function () {
+        // PERFIL DE USUARIOS
+        Route::get('/perfil_usuario','UserController@perfil')->name('perfil');
+        Route::post('updateprofile/{user}','UserController@updateprofile')->name('updateprofile');
+    });
+
+    Route::group(['middleware' => ['permission:users.changestatus']], function () {
+        // CAMBIAR ESTADO DE USUARIOS
+        Route::get('/users/modalCambEstado/{id}', 'UserController@modalCambioEstado')->name('users.modalDelete');
+        Route::post('/users/cambiarestado/{id}','UserController@cambiarestado')->name('users.cambiarestado');
+    });
+
+    Route::group(['middleware' => ['permission:users.destroy']], function () {
+        // ELIMINAR USUARIOS
+        Route::post('/users_delete/{user}','UserController@destroy')->name('users.destroy');
+        Route::get('/users/modalDelete/{id}', 'UserController@modalDelete')->name('users.modalDelete');
+    });
+
     // CAMBIAR IMAGEN DE AVATAR
     Route::post('/useravatar', 'UserController@uploadAvatarImagen')->name('users.avatar');
-    //  ACTUALIZAR ROL
-    Route::put('/users/{user}/rol','UserController@updaterol')->name('updaterol');
-
-    // PERFIL DE USUARIOS
-    Route::get('/perfil_usuario','UserController@perfil')->name('perfil');
-    Route::post('updateprofile/{user}','UserController@updateprofile')->name('updateprofile');
-
-    // CAMBIAR ESTADO DE USUARIOS
-    Route::get('/users/modalCambEstado/{id}', 'UserController@modalCambioEstado')->name('users.modalDelete');
-    Route::post('/users/cambiarestado/{id}','UserController@cambiarestado')->name('users.cambiarestado');
-
-    // ELIMINAR USUARIOS
-    Route::post('/users_delete/{user}','UserController@destroy')->name('users.destroy');
-    Route::get('/users/modalDelete/{id}', 'UserController@modalDelete')->name('users.modalDelete');
+    // Ruta para validar nombre de usuario
+    Route::post('/validar_user','UserController@validarUsername')->name('users.validar');
 
     // ========================================================================================
     //                                    RUTAS DE ESPECIALIDADES

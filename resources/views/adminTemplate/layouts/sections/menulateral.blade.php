@@ -50,10 +50,12 @@
                             <span class="small">{{ Auth::user()->cargo}} </span>
                         </div>
                     </a>
-                    <a class="dropdown-item" href="/perfil_usuario">
-                        <i class="fe fe-user icon dropdown-item-icon"></i>
-                        Perfil de usuario
-                    </a>
+                    @if (Gate::check('users.profile'))
+                        <a class="dropdown-item" href="/perfil_usuario">
+                            <i class="fe fe-user icon dropdown-item-icon"></i>
+                            Perfil de usuario
+                        </a>
+                    @endif
                     <a class="dropdown-item cursor-pointer bntCerrarSesion">
                         <i class="fe fe-log-out icon dropdown-item-icon iconCerrarSesion"></i>
                         <span class="textCerrarSesion">
@@ -82,55 +84,63 @@
                 {{-- =================================================================================================================== --}}
                 {{--                                              CONTROL DE CITAS                                                       --}}
                 {{-- =================================================================================================================== --}}
-                <li class="nav-item {!!strstr($item,'.',true)=='1'?'active':'';!!}">
-                    <a class="dropdown-item" href="/citas" >
-                        <span class="nav-link-icon  d-lg-inline-block">
-                            <i class="fas fa-clipboard-list icon"></i>
-                        </span>
-                        <span class="nav-link-title">
-                            Control de citas
-                        </span>
-                    </a>
-                </li>
+                @if (Gate::check('citas.index'))
+                    <li class="nav-item {!!strstr($item,'.',true)=='1'?'active':'';!!}">
+                        <a class="dropdown-item" href="/citas" >
+                            <span class="nav-link-icon  d-lg-inline-block">
+                                <i class="fas fa-clipboard-list icon"></i>
+                            </span>
+                            <span class="nav-link-title">
+                                Control de citas
+                            </span>
+                        </a>
+                    </li>
+                @endif
                 {{-- =================================================================================================================== --}}
                 {{--                                                  USUARIOS                                                           --}}
                 {{-- =================================================================================================================== --}}
-                <li class="nav-item {!!strstr($item,'.',true)=='2'?'active':'';!!}">
-                    <a class="dropdown-item" href="/usuarios" >
-                        <span class="nav-link-icon  d-lg-inline-block">
-                            <i class="fa fa-users"></i>
-                        </span>
-                        <span class="nav-link-title">
-                            Usuarios
-                        </span>
-                    </a>
-                </li>
+                @if (Gate::check('users.index'))
+                    <li class="nav-item {!!strstr($item,'.',true)=='2'?'active':'';!!}">
+                        <a class="dropdown-item" href="/usuarios" >
+                            <span class="nav-link-icon  d-lg-inline-block">
+                                <i class="fa fa-users"></i>
+                            </span>
+                            <span class="nav-link-title">
+                                Usuarios
+                            </span>
+                        </a>
+                    </li>
+                @endif
                 {{-- =================================================================================================================== --}}
                 {{--                                                    ROLES                                                            --}}
                 {{-- =================================================================================================================== --}}
-                <li class="nav-item {!!strstr($item,'.',true)=='3' ? 'active' : '' ;!!}">
-                    <a class="dropdown-item" href="/roles" >
-                        <span class="nav-link-icon  d-lg-inline-block">
-                            <img src="{{asset('icons/role.svg')}}" width="20" height="20" style="{!!strstr($item,'.',true)=='3' ? 'filter: invert(57%) sepia(50%) saturate(468%) hue-rotate(134deg) brightness(101%) contrast(97%);' : 'filter: brightness(0) invert(1);'; !!}">
-                        </span>
-                        <span class="nav-link-title">
-                            Roles &ensp;
-                        </span>
-                    </a>
-                </li>
+                @if (Gate::check('roles.index'))
+                    <li class="nav-item {!!strstr($item,'.',true)=='3' ? 'active' : '' ;!!}">
+                        <a class="dropdown-item" href="/roles" >
+                            <span class="nav-link-icon  d-lg-inline-block">
+                                <img src="{{asset('icons/role.svg')}}" width="20" height="20" style="{!!strstr($item,'.',true)=='3' ? 'filter: invert(57%) sepia(50%) saturate(468%) hue-rotate(134deg) brightness(101%) contrast(97%);' : 'filter: brightness(0) invert(1);'; !!}">
+                            </span>
+                            <span class="nav-link-title">
+                                Roles &ensp;
+                            </span>
+                        </a>
+                    </li>
+                @endif
                 {{-- =================================================================================================================== --}}
                 {{--                                                DENTALIFE                                                            --}}
                 {{-- =================================================================================================================== --}}
-                <li class="nav-item {!!strstr($item,'.',true)=='4'?'active':'';!!}">
-                    <a class="dropdown-item" href="/especialidades" >
-                        <span class="nav-link-icon  d-lg-inline-block">
-                            <img src="{{asset('icons/tooth.png')}}" width="20" height="20" style="{!!strstr($item,'.',true)=='4' ? 'filter: invert(57%) sepia(50%) saturate(468%) hue-rotate(134deg) brightness(101%) contrast(97%);' : 'filter: brightness(0) invert(1);'; !!}">
-                        </span>
-                        <span class="nav-link-title">
-                            Especialidades &ensp;
-                        </span>
-                    </a>
-                </li>
+                @if (Gate::check('especialidades.index'))
+                    <li class="nav-item {!!strstr($item,'.',true)=='4'?'active':'';!!}">
+                        <a class="dropdown-item" href="/especialidades" >
+                            <span class="nav-link-icon  d-lg-inline-block">
+                                <img src="{{asset('icons/tooth.png')}}" width="20" height="20" style="{!!strstr($item,'.',true)=='4' ? 'filter: invert(57%) sepia(50%) saturate(468%) hue-rotate(134deg) brightness(101%) contrast(97%);' : 'filter: brightness(0) invert(1);'; !!}">
+                            </span>
+                            <span class="nav-link-title">
+                                Especialidades &ensp;
+                            </span>
+                        </a>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>

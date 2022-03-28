@@ -41,7 +41,7 @@ class UserController extends Controller
      */
     public function show( Request $request, $cod){
         $user = User::findOrFail(decode($cod));
-        if($user->active == '1'){
+        if($user->active != '2'){
             $rol = Role::select('name')->where('id',$user->role_id)->first();
             Session::put('item', '2.');
             return view('adminTemplate.users.show',compact('user','rol'));
@@ -52,7 +52,7 @@ class UserController extends Controller
      * Muestra el formulario para crear un nuevo usuario
      */
     public function create(){
-        $roles = Role::where('active','1')->get();
+        $roles = Role::where('active', '1')->get();
         Session::put('item', '2.');
         return view('adminTemplate.users.create',compact('roles'));
     }
@@ -182,7 +182,7 @@ class UserController extends Controller
      */
     public function edit($id){
         $user=User::findOrFail(decode($id));
-        if($user->active == '1'){
+        if($user->active != '2'){
             $roles = Role::where('active','1')->get();
             Session::put('item', '2.');
             return view('adminTemplate.users.edit',compact('user','roles'));

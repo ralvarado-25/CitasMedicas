@@ -36,10 +36,12 @@
                                 <span class="small">{{ Auth::user()->cargo}} </span>
                             </div>
                         </a>
-                        <a class="dropdown-item" href="/perfil_usuario">
-                            <i class="fe fe-user icon dropdown-item-icon"></i>
-                            Perfil de usuario
-                        </a>
+                        @if (Gate::check('users.profile'))
+                            <a class="dropdown-item" href="/perfil_usuario">
+                                <i class="fe fe-user icon dropdown-item-icon"></i>
+                                Perfil de usuario
+                            </a>
+                        @endif
                         <a class="dropdown-item cursor-pointer bntCerrarSesion">
                             <i class="fe fe-log-out icon dropdown-item-icon iconCerrarSesion"></i>
                             <span class="textCerrarSesion">

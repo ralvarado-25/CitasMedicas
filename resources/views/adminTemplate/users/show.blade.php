@@ -24,19 +24,6 @@
             </div>
         </div>
     </div>
-    {{-- Botones para añadir nuevo registro --}}
-    <div class="col-auto ms-auto d-print-none">
-        <div class="btn-list">
-            <a href="/roles" class="btn btn-outline-secondary">
-                <b><svg class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="15" cy="15" r="4" /><path d="M18.5 18.5l2.5 2.5" /><path d="M4 6h16" /><path d="M4 12h4" /><path d="M4 18h4" /></svg>
-                Ver roles</b>
-            </a>
-            <a href="/usuarios" class="btn btn-outline-secondary">
-                <b><svg class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="9" cy="7" r="4" /><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg>
-                Ver usuarios</b>
-            </a>
-        </div>
-    </div>
 @endsection
 @section('contenido')
     {{-- EL CONTENIDO GRAL DE LA VISTA IRA AQUI --}}
@@ -97,24 +84,16 @@
             //========================================================================================--}}
             <div class="row justify-content-md-center" style="margin-top:20px">
                 <div class="col-lg-3 col-md-3 col-sm-6 text-center">
-                    <a href="/usuarios/{{ code($user->id)}}/edit">
+                    <a href="/usuarios/edit/{{ code($user->id)}}">
                         <button class="btn btn-ghost-primary btn-lg border border-primary" >
                             <i class="fas fa-edit fa-md"></i> &nbsp;&nbsp;
                             <span > Editar </span>
                         </button>
                     </a>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 text-center">
-                    <a href="/usuarios_privilegios/{{code($user->id)}}/edit" >
-                        <button class="btn btn-ghost-orange btn-lg border border-orange" >
-                            <i class="fas fa-lock fa-md"></i> &nbsp;&nbsp;
-                            <span > Privilegios </span>
-                        </button>
-                    </a>
-                </div>
                 @if($user->id != userId())
                     <div class="col-lg-3 col-md-3 col-sm-6 text-center">
-                        <a rel="modalCambioEstado" href="/usuarios/modalCambEstado/{{code($user->id)}}" data-step="5" data-intro="Presionando este botón abrirá una nueva ventana de confirmación para Activar o Desactivar el usuario.">
+                        <a rel="modalCambioEstado" href="/users/modalCambEstado/{{code($user->id)}}" >
                             @if ($user->active==1)
                                 <button class="btn btn-ghost-yellow btn-lg border border-yellow">
                                     <i class="fas fa-plug fa-md"></i> &nbsp;&nbsp;
@@ -131,7 +110,7 @@
                 @endif
                 @if($user->id != userId())
                     <div class="col-lg-3 col-md-3 col-sm-6 text-center">
-                        <a rel="modalEliminar" href="/usuarios/modalDelete/{{code($user->id)}}" data-step="6" data-intro="Presionando este botón abrirá una nueva ventana de confirmación para Eliminar el usuario.">
+                        <a rel="modalEliminar" href="/users/modalDelete/{{code($user->id)}}" data-step="6" data-intro="Presionando este botón abrirá una nueva ventana de confirmación para Eliminar el usuario.">
                             <button class="btn btn-ghost-danger btn-lg border border-danger">
                                 <i class="fa fa-trash-alt fa-md"></i> &nbsp;&nbsp;
                                 <span> Eliminar </span>
@@ -143,12 +122,26 @@
         </div>
     </div>
 
-    {{-- AQUI SE INCLUIRAN LOS MODALES PARA CREACION EDICION Y ELIMINACION --}}
-    @include('adminTemplate.citas.modalCreate')
+        {{-- Modal Eliminar --}}
+        <div class="modal modal-danger fade" aria-hidden="true" role="dialog" id="modalEliminar" data-backdrop="static">
+            <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-content">
+                </div>
+            </div>
+        </div>
 
-    @include('adminTemplate.citas.modalEdit')
-    @include('adminTemplate.citas.modalDelete')
+        {{-- Modal Cambio Estado --}}
+        <div class="modal  fade" aria-hidden="true" role="dialog" id="modalCambioEstado" data-backdrop="static">
+            <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-content">
+                </div>
+            </div>
+        </div>
 
 @endsection
 @section('scripts')
+<script>
+    modalAjax("modalEliminar","modalEliminar","modal-content");
+    modalAjax("modalCambioEstado","modalCambioEstado","modal-content");
+</script>
 @endsection
