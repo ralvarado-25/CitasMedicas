@@ -57,6 +57,25 @@ class Citas extends Model
         return $estilos == 1 ? $fin : $val;
     }
 
+    public function getColor(){
+        switch ($this->estado){
+            case '0':
+                $val = "#edb66a";
+            break;
+            case '1':
+                $val = "#66c474";
+            break;
+            case '2':
+                $val = "#d63939";
+            break;
+            default:
+                $val = "#2a3942";
+            break;
+        }
+        return $val;
+
+    }
+
     public function scopeRangeDate($query,$start,$final, $type){
         if($start != '' && $final != '' && $type == 'r'){
             $query->whereBetween('fecha', [$start, $final]);
