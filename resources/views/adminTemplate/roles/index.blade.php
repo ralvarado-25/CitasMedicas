@@ -41,13 +41,15 @@
     </div>
     {{-- Botones para añadir nuevo registro --}}
     <div class="col-auto ms-auto d-print-none">
-        <div class="btn-list">
-            <a href="/roles/create" >
-                <button class="btn btn btn-primary btn-pill">
-                    <i class="fa fa-plus fa-md" ></i> &nbsp; Rol</span>
-                </button>
-            </a>
-        </div>
+        @if (Gate::check('roles.create'))
+            <div class="btn-list">
+                <a href="/roles/create" >
+                    <button class="btn btn btn-primary btn-pill">
+                        <i class="fa fa-plus fa-md" ></i> &nbsp; Rol</span>
+                    </button>
+                </a>
+            </div>
+        @endif
     </div>
 @endsection
 @section('contenido')
@@ -89,20 +91,26 @@
                                     @endif
                                 </td>
                                 <td>
+                                    @if (Gate::check('roles.create'))
                                     <a href="{{ route('roles.show', code($role->id)) }}" title="Información">
                                         <svg class="icon text-muted iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="2" /><path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7" /></svg>
                                     </a> &nbsp;
-                                    <a href="{{ route('roles.edit', code($role->id)) }}" title="Editar">
-                                        <svg class="icon text-muted iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" /><path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" /><line x1="16" y1="5" x2="19" y2="8" /></svg>
-                                    </a> &nbsp;
-                                    @if ($role->active==1)
-                                        <a title="Desactivar" data-toggle="modal" data-target="#modalState-{{$role->id}}" class="cursor-pointer">
-                                            <svg class="icon text-danger iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h10v6a3 3 0 0 1 -3 3h-4a3 3 0 0 1 -3 -3v-6" /><line x1="9" y1="3" x2="9" y2="7" /><line x1="15" y1="3" x2="15" y2="7" /><path d="M12 16v2a2 2 0 0 0 2 2h3" /></svg>
-                                        </a>
-                                    @else
-                                        <a title="Activar" data-toggle="modal" data-target="#modalState-{{$role->id}}" class="cursor-pointer">
-                                            <svg class="icon text-green iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h10v6a3 3 0 0 1 -3 3h-4a3 3 0 0 1 -3 -3v-6" /><line x1="9" y1="3" x2="9" y2="7" /><line x1="15" y1="3" x2="15" y2="7" /><path d="M12 16v2a2 2 0 0 0 2 2h3" /></svg>
-                                        </a>
+                                    @endif
+                                    @if (Gate::check('roles.edit'))
+                                        <a href="{{ route('roles.edit', code($role->id)) }}" title="Editar">
+                                            <svg class="icon text-muted iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" /><path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" /><line x1="16" y1="5" x2="19" y2="8" /></svg>
+                                        </a> &nbsp;
+                                    @endif
+                                    @if (Gate::check('roles.changestatus'))
+                                        @if ($role->active==1)
+                                            <a title="Desactivar" data-toggle="modal" data-target="#modalState-{{$role->id}}" class="cursor-pointer">
+                                                <svg class="icon text-danger iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h10v6a3 3 0 0 1 -3 3h-4a3 3 0 0 1 -3 -3v-6" /><line x1="9" y1="3" x2="9" y2="7" /><line x1="15" y1="3" x2="15" y2="7" /><path d="M12 16v2a2 2 0 0 0 2 2h3" /></svg>
+                                            </a>
+                                        @else
+                                            <a title="Activar" data-toggle="modal" data-target="#modalState-{{$role->id}}" class="cursor-pointer">
+                                                <svg class="icon text-green iconhover" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h10v6a3 3 0 0 1 -3 3h-4a3 3 0 0 1 -3 -3v-6" /><line x1="9" y1="3" x2="9" y2="7" /><line x1="15" y1="3" x2="15" y2="7" /><path d="M12 16v2a2 2 0 0 0 2 2h3" /></svg>
+                                            </a>
+                                        @endif
                                     @endif
                                 </td>
                             </tr>

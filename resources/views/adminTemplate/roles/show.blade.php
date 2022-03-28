@@ -40,122 +40,128 @@
     {{-- EL CONTENIDO GRAL DE LA VISTA IRA AQUI --}}
     <div class="col-lg-12">
         <div class="row" style="margin-bottom:20px">
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                <div class="text-center">
-                    <a href="/roles/edit/{{code($role->id)}}" class="btn btn-ghost-primary border border-primary">
-                        <i class="fa fa-edit"></i>&nbsp; Modificar rol
-                    </a>
+            @if (Gate::check('roles.edit'))
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="text-center">
+                        <a href="/roles/edit/{{code($role->id)}}" class="btn btn-ghost-primary border border-primary">
+                            <i class="fa fa-edit"></i>&nbsp; Modificar rol
+                        </a>
+                    </div>
                 </div>
-            </div>
+            @endif
 
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                <div class="text-center">
-                    {!! Form::open(['route'=>['roles.changestatus', code($role->id)], 'method'=>'GET', 'onsubmit'=>'btnState.disabled = true; return true;']) !!}
-                        @if ($role->active==0)
-                            <button type="button" class="btn btn-ghost-info font-weight-bold border border-info" id="btnActivar">
-                                <i class="fa fa-plug"></i>&nbsp; Activar rol
-                            </button>
-                        @else
-                            <button type="button" class="btn btn-ghost-orange border border-orange font-weight-bold" id="btnActivar">
-                                <i class="fa fa-plug"></i>&nbsp; Desactivar rol
-                            </button>
-                        @endif
+            @if (Gate::check('roles.changestatus'))
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="text-center">
+                        {!! Form::open(['route'=>['roles.changestatus', code($role->id)], 'method'=>'GET', 'onsubmit'=>'btnState.disabled = true; return true;']) !!}
+                            @if ($role->active==0)
+                                <button type="button" class="btn btn-ghost-info font-weight-bold border border-info" id="btnActivar">
+                                    <i class="fa fa-plug"></i>&nbsp; Activar rol
+                                </button>
+                            @else
+                                <button type="button" class="btn btn-ghost-orange border border-orange font-weight-bold" id="btnActivar">
+                                    <i class="fa fa-plug"></i>&nbsp; Desactivar rol
+                                </button>
+                            @endif
 
-                        {{-- modal de estado --}}
-                        <div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" id="modalRolEstado" data-backdrop="static">
-                            <div class="modal-dialog modal-sm modal-dialog-centered">
-                                <div class="modal-content">
-                                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                                    <div class="modal-status @if($role->active==0) bg-info @else bg-red @endif"></div>
-                                    <div class="modal-body text-center py-4">
-                                        <svg class="icon @if($role->active==0) text-info @else text-red @endif icon-lg" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                            <path d="M7 6a7.75 7.75 0 1 0 10 0" />
-                                            <line x1="12" y1="4" x2="12" y2="12" />
-                                        </svg>
-                                        <h3>¿Está seguro?</h3>
-                                        <div class="text-muted">
-                                            ¿Está seguro de cambiar a estado @if($role->active==0) ACTIVO @else INACTIVO @endif al rol <b>{{$role->name}}</b>?
+                            {{-- modal de estado --}}
+                            <div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" id="modalRolEstado" data-backdrop="static">
+                                <div class="modal-dialog modal-sm modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                        <div class="modal-status @if($role->active==0) bg-info @else bg-red @endif"></div>
+                                        <div class="modal-body text-center py-4">
+                                            <svg class="icon @if($role->active==0) text-info @else text-red @endif icon-lg" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <path d="M7 6a7.75 7.75 0 1 0 10 0" />
+                                                <line x1="12" y1="4" x2="12" y2="12" />
+                                            </svg>
+                                            <h3>¿Está seguro?</h3>
+                                            <div class="text-muted">
+                                                ¿Está seguro de cambiar a estado @if($role->active==0) ACTIVO @else INACTIVO @endif al rol <b>{{$role->name}}</b>?
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div class="w-100">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <a class="btn @if(themeMode() == 'D') btn-secondary @endif w-100" data-dismiss="modal">
-                                                        Cancelar
-                                                    </a>
-                                                </div>
-                                                <div class="col">
-                                                    <button type="submit" class="btn @if($role->active==0) btn-info @else btn-red @endif w-100" name="btnState">Confirmar</button>
+                                        <div class="modal-footer">
+                                            <div class="w-100">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <a class="btn @if(themeMode() == 'D') btn-secondary @endif w-100" data-dismiss="modal">
+                                                            Cancelar
+                                                        </a>
+                                                    </div>
+                                                    <div class="col">
+                                                        <button type="submit" class="btn @if($role->active==0) btn-info @else btn-red @endif w-100" name="btnState">Confirmar</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    {!! Form::close() !!}
+                        {!! Form::close() !!}
+                    </div>
                 </div>
-            </div>
+            @endif
 
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                <div class="text-center">
-                    {!! Form::open(['route'=>['roles.destroy', $role->id], 'id'=>'formDeleteRol', 'method'=>'POST', 'onsubmit'=>'btnSubmitEliminar.disabled = true; return true;' ]) !!}
-                        <button type="button" class="btn btn-ghost-danger border border-danger" id="btnEliminar">
-                            <i class="fa fa-trash-alt" ></i>&nbsp; Eliminar rol
-                        </button>
-                        {{-- modal para eliminar --}}
-                        <div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" id="modalRolDelete" data-backdrop="static">
-                            <div class="modal-dialog modal-sm modal-dialog-centered">
-                                <div class="modal-content">
-                                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                                    <div class="modal-status bg-red"></div>
-                                    <div class="modal-body text-center py-4">
-                                        <svg class="icon icon-lg text-red" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                            <line x1="4" y1="7" x2="20" y2="7" />
-                                            <line x1="10" y1="11" x2="10" y2="17" />
-                                            <line x1="14" y1="11" x2="14" y2="17" />
-                                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                                        </svg>
-                                        <h3>¿Está seguro de eliminar el rol <b>{{$role->name}}</b>?</h3>
+            @if (Gate::check('roles.destroy'))
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="text-center">
+                        {!! Form::open(['route'=>['roles.destroy', $role->id], 'id'=>'formDeleteRol', 'method'=>'POST', 'onsubmit'=>'btnSubmitEliminar.disabled = true; return true;' ]) !!}
+                            <button type="button" class="btn btn-ghost-danger border border-danger" id="btnEliminar">
+                                <i class="fa fa-trash-alt" ></i>&nbsp; Eliminar rol
+                            </button>
+                            {{-- modal para eliminar --}}
+                            <div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" id="modalRolDelete" data-backdrop="static">
+                                <div class="modal-dialog modal-sm modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                        <div class="modal-status bg-red"></div>
+                                        <div class="modal-body text-center py-4">
+                                            <svg class="icon icon-lg text-red" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <line x1="4" y1="7" x2="20" y2="7" />
+                                                <line x1="10" y1="11" x2="10" y2="17" />
+                                                <line x1="14" y1="11" x2="14" y2="17" />
+                                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                            </svg>
+                                            <h3>¿Está seguro de eliminar el rol <b>{{$role->name}}</b>?</h3>
 
-                                        <p class="text-justify">
-                                            Esta acción no se puede deshacer, esto eliminará de forma permanente el rol y sus permisos asociados.
-                                        </p>
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-2" id="rolBorrar--label">
-                                            <label> Por favor escriba su contraseña para confirmar</label>
-                                            <div class='input-group'>
-                                                <input id="password1" type='password' class="pass_quit form-control" name="rolBorrar" style="border-right: 0px" placeholder="Escriba su contraseña" autocomplete="off" />
-                                                <span class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-eye-open" id="pass_first" title="Mostrar Contraseña"></span>
-                                                </span>
-                                            </div>
-                                            <span class="text-red" id="rolBorrar-error"></span>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div class="w-100">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <a class="btn w-100" data-dismiss="modal">
-                                                        Cancelar
-                                                    </a>
+                                            <p class="text-justify">
+                                                Esta acción no se puede deshacer, esto eliminará de forma permanente el rol y sus permisos asociados.
+                                            </p>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-2" id="rolBorrar--label">
+                                                <label> Por favor escriba su contraseña para confirmar</label>
+                                                <div class='input-group'>
+                                                    <input id="password1" type='password' class="pass_quit form-control" name="rolBorrar" style="border-right: 0px" placeholder="Escriba su contraseña" autocomplete="off" />
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-eye-open" id="pass_first" title="Mostrar Contraseña"></span>
+                                                    </span>
                                                 </div>
-                                                <div class="col">
-                                                    <button type="submit" class="btn btn-red w-100" name="btnSubmitEliminar">Eliminar</button>
+                                                <span class="text-red" id="rolBorrar-error"></span>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <div class="w-100">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <a class="btn w-100" data-dismiss="modal">
+                                                            Cancelar
+                                                        </a>
+                                                    </div>
+                                                    <div class="col">
+                                                        <button type="submit" class="btn btn-red w-100" name="btnSubmitEliminar">Eliminar</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    {!! Form::close() !!}
+                        {!! Form::close() !!}
+                    </div>
                 </div>
-            </div>
+            @endif
 
         </div>
         {{--//========================================================================================
