@@ -47,7 +47,7 @@
                     </tr>
                     <tr>
                         <td width="50%" class="font-weight-bold">Estado</td>
-                        <td>{!! $esp->duracion !!}</td>
+                        <td>{!! $esp->getEstado() !!}</td>
                     </tr>
                 </tbody>
             </table>
